@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A919200F1BBF0BF30096272E /* UdClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A919200E1BBF0BF30096272E /* UdClient.swift */; settings = {ASSET_TAGS = (); }; };
+		A91920111BBF0C3C0096272E /* UdConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91920101BBF0C3C0096272E /* UdConvenience.swift */; settings = {ASSET_TAGS = (); }; };
+		A91920131BBF19020096272E /* UdConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91920121BBF19020096272E /* UdConstants.swift */; settings = {ASSET_TAGS = (); }; };
+		A91920151BBF1F710096272E /* UdUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91920141BBF1F710096272E /* UdUser.swift */; settings = {ASSET_TAGS = (); }; };
 		A9681DE81BBE9425005F6418 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9681DE71BBE9425005F6418 /* AppDelegate.swift */; };
 		A9681DEA1BBE9425005F6418 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9681DE91BBE9425005F6418 /* FirstViewController.swift */; };
 		A9681DEC1BBE9425005F6418 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9681DEB1BBE9425005F6418 /* SecondViewController.swift */; };
@@ -35,6 +39,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A919200E1BBF0BF30096272E /* UdClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdClient.swift; sourceTree = "<group>"; };
+		A91920101BBF0C3C0096272E /* UdConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdConvenience.swift; sourceTree = "<group>"; };
+		A91920121BBF19020096272E /* UdConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdConstants.swift; sourceTree = "<group>"; };
+		A91920141BBF1F710096272E /* UdUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdUser.swift; sourceTree = "<group>"; };
 		A9681DE41BBE9425005F6418 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9681DE71BBE9425005F6418 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A9681DE91BBE9425005F6418 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -75,6 +83,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A919200D1BBF0BC00096272E /* Udacity */ = {
+			isa = PBXGroup;
+			children = (
+				A919200E1BBF0BF30096272E /* UdClient.swift */,
+				A91920121BBF19020096272E /* UdConstants.swift */,
+				A91920101BBF0C3C0096272E /* UdConvenience.swift */,
+				A91920141BBF1F710096272E /* UdUser.swift */,
+			);
+			name = Udacity;
+			sourceTree = "<group>";
+		};
 		A9681DDB1BBE9425005F6418 = {
 			isa = PBXGroup;
 			children = (
@@ -117,6 +136,7 @@
 		A9681E1E1BBE9BE7005F6418 /* Clients */ = {
 			isa = PBXGroup;
 			children = (
+				A919200D1BBF0BC00096272E /* Udacity */,
 			);
 			name = Clients;
 			sourceTree = "<group>";
@@ -276,10 +296,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A91920111BBF0C3C0096272E /* UdConvenience.swift in Sources */,
 				A9681E4A1BBEE91A005F6418 /* LoginViewController.swift in Sources */,
+				A919200F1BBF0BF30096272E /* UdClient.swift in Sources */,
 				A9681DEC1BBE9425005F6418 /* SecondViewController.swift in Sources */,
 				A9681DE81BBE9425005F6418 /* AppDelegate.swift in Sources */,
+				A91920131BBF19020096272E /* UdConstants.swift in Sources */,
 				A9681DEA1BBE9425005F6418 /* FirstViewController.swift in Sources */,
+				A91920151BBF1F710096272E /* UdUser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,6 +451,7 @@
 				A9681DFA1BBE9425005F6418 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
