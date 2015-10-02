@@ -31,6 +31,7 @@
 		A9681E461BBEA259005F6418 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9681E431BBEA259005F6418 /* Roboto-Medium.ttf */; settings = {ASSET_TAGS = (); }; };
 		A9681E471BBEA259005F6418 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9681E441BBEA259005F6418 /* Roboto-Regular.ttf */; settings = {ASSET_TAGS = (); }; };
 		A9681E481BBEA259005F6418 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9681E451BBEA259005F6418 /* Roboto-Thin.ttf */; settings = {ASSET_TAGS = (); }; };
+		A9681E4A1BBEE91A005F6418 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9681E491BBEE91A005F6418 /* LoginViewController.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,7 @@
 		A9681E431BBEA259005F6418 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Medium.ttf"; path = "Fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		A9681E441BBEA259005F6418 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Regular.ttf"; path = "Fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		A9681E451BBEA259005F6418 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Thin.ttf"; path = "Fonts/Roboto-Thin.ttf"; sourceTree = "<group>"; };
+		A9681E491BBEE91A005F6418 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 			children = (
 				A9681DEB1BBE9425005F6418 /* SecondViewController.swift */,
 				A9681DE91BBE9425005F6418 /* FirstViewController.swift */,
+				A9681E491BBEE91A005F6418 /* LoginViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9681E4A1BBEE91A005F6418 /* LoginViewController.swift in Sources */,
 				A9681DEC1BBE9425005F6418 /* SecondViewController.swift in Sources */,
 				A9681DE81BBE9425005F6418 /* AppDelegate.swift in Sources */,
 				A9681DEA1BBE9425005F6418 /* FirstViewController.swift in Sources */,
