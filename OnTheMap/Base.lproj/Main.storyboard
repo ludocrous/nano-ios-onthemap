@@ -161,7 +161,6 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="signUpButtonPressed:" destination="vXa-qF-NhB" eventType="touchUpInside" id="wY3-yo-h2W"/>
                                             <action selector="signUpButtonTouch:" destination="vXa-qF-NhB" eventType="touchUpInside" id="xZ9-25-1Pk"/>
                                         </connections>
                                     </button>
@@ -171,7 +170,6 @@
                                     <constraint firstAttribute="trailing" secondItem="Bck-lk-cN1" secondAttribute="trailing" id="5uH-Ch-dBX"/>
                                     <constraint firstAttribute="trailing" secondItem="hH3-ag-7gu" secondAttribute="trailing" id="AwW-Mx-0gi"/>
                                     <constraint firstItem="TDE-9u-a0V" firstAttribute="leading" secondItem="GH5-ed-wYC" secondAttribute="leading" id="HD7-ft-oFr"/>
-                                    <constraint firstItem="s5x-2T-QB5" firstAttribute="leading" secondItem="GH5-ed-wYC" secondAttribute="leading" constant="8" id="HHj-kh-Aj7"/>
                                     <constraint firstItem="Q0F-Lk-OIC" firstAttribute="top" secondItem="TDE-9u-a0V" secondAttribute="bottom" constant="8" id="HRM-np-3Sm"/>
                                     <constraint firstAttribute="trailing" secondItem="Q0F-Lk-OIC" secondAttribute="trailing" id="Mb0-uK-HMU"/>
                                     <constraint firstItem="s5x-2T-QB5" firstAttribute="top" secondItem="Q0F-Lk-OIC" secondAttribute="bottom" constant="13" id="ShL-tT-Q6X"/>
