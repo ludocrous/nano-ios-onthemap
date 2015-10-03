@@ -17,6 +17,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -29,14 +30,32 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginButtonTouch(sender: UIButton) {
-        UdClient.sharedInstance().authenticateWithUsername("xxxx@xxxx", password: "password") {
-            (success, errorString) in
-            if success {
-                print("Yippee")
-            }else{
-                print("Ahhhhhh No")
+        if let userName = emailTextField.text {
+            if let password = passwordTextField.text {
+                UdClient.sharedInstance().authenticateWithUsername(userName, password: password) {
+                    (success, errorString) in
+                    if success {
+                        self.completeLogin()
+                    } else {
+                        print("Ahhhhhh No")
+                    }
+                }
+                
+            } else {
+                //Error no password
             }
+        } else {
+            // Error - no user name entered
         }
+    }
+    
+    func completeLogin() {
+        dispatch_async(dispatch_get_main_queue(),{
+            let storyboard = UIStoryboard (name: "Main", bundle: nil)
+            let resultVC = storyboard.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
+            self.presentViewController(resultVC, animated: true, completion: nil)
+
+        })
     }
 
 }
