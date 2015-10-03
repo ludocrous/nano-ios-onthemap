@@ -14,12 +14,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
    
     
-    @IBAction func signUpButtonTouch(sender: UIButton) {
-        UdClient.sharedInstance().loadUdacitySignUpPage()
-    }
-    
-    @IBAction func loginButtonTouch(sender: UIButton) {
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -29,4 +23,20 @@ class LoginViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+    @IBAction func signUpButtonTouch(sender: UIButton) {
+        UdClient.sharedInstance().loadUdacitySignUpPage()
+    }
+    
+    @IBAction func loginButtonTouch(sender: UIButton) {
+        UdClient.sharedInstance().authenticateWithUsername("xxxx@xxxx", password: "password") {
+            (success, errorString) in
+            if success {
+                print("Yippee")
+            }else{
+                print("Ahhhhhh No")
+            }
+        }
+    }
+
 }

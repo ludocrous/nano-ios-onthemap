@@ -30,6 +30,25 @@ extension UdClient {
         
     }
         
+    struct JSONBodyKeys {
+        static let Username = "username"
+        static let Password = "password"
+    }
     
+    struct JSONResponseKeys {
+        //MARK: Session responses
+        
+        //MARK: For account section
+        static let Account = "account"
+        static let AccountRegistered = "registered"
+        static let AccountKey = "key"
+        
+        static let Session = "session"
+        static let SessionID = "id"
+        static let SessionExpiration = "expiration"
+        
+        //MARK:
+        
+    }
     
 }
