@@ -47,7 +47,13 @@ extension UdClient {
         static let SessionID = "id"
         static let SessionExpiration = "expiration"
         
-        //MARK:
+        //MARK: For user information 
+        
+        static let User = "user"
+        static let UserFirstName = "first_name"
+        static let UserLastName = "last_name"
+        static let UserID = "key"
+        
         
     }
     

@@ -14,7 +14,12 @@ class UdUser {
     var firstName: String?
     var lastName: String?
     
-    init( dictionary: [String: AnyObject]) {
-        
+    class func createUserFromResults(dictionary: [String: AnyObject]) -> UdUser {
+        let result = UdUser()
+        print(dictionary)
+        result.firstName = dictionary[UdClient.JSONResponseKeys.UserFirstName] as? String
+        result.lastName = dictionary[UdClient.JSONResponseKeys.UserLastName] as? String
+        result.id = dictionary[UdClient.JSONResponseKeys.UserID] as? String
+        return result
     }
 }

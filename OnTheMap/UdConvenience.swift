@@ -17,7 +17,14 @@ extension UdClient {
         
         self.postSessionID(username, password: password) { (success, sessionID, errorString) in
             if success {
-                completionHandler(success: true, errorString: nil)
+                self.getUserData() {(success, result, errorString) in
+                    if success {
+                        print("Found details for: \(result?.id) First: \(result?.firstName) Last: \(result?.lastName)")
+                        completionHandler(success: true, errorString: nil)
+                    } else {
+                        //What now
+                    }
+                }
             } else {
                 completionHandler(success: false,  errorString: errorString)
             }
@@ -95,7 +102,24 @@ extension UdClient {
 */
     
     
-//    func getUserData(completionHandler: (success: Bool, )
+    func getUserData(completionHandler: (success: Bool, result: UdUser?, errorString: String?) -> Void) {
+        var mutableMethod : String = Methods.GetPublicUserData
+        mutableMethod = UdClient.subtituteKeyInMethod(mutableMethod, key: UdClient.URLKeys.UserID, value: String(UdClient.sharedInstance().userID!))!
+        taskForGETMethod(mutableMethod)  { (result, error) -> Void in
+            if let error = error {
+                completionHandler(success: false, result: nil, errorString: error.localizedDescription)
+            } else {
+                if let userDict = (result as? [String:AnyObject]) where userDict.indexForKey("user") != nil {
+                    let userDetail = userDict[JSONResponseKeys.User] as! [String:AnyObject]
+                    self.user = UdUser.createUserFromResults(userDetail)
+                    completionHandler(success: true, result: self.user, errorString: nil)
+                } else {
+                    completionHandler(success: false, result: nil, errorString: "No user details returned")
+                }
+            }
+        }
+
+    }
     
     
     //Mark: Udacity Website sign up

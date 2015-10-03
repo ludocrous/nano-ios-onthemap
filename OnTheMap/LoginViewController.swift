@@ -17,6 +17,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+
         
     }
     
@@ -37,14 +38,17 @@ class LoginViewController: UIViewController {
                     if success {
                         self.completeLogin()
                     } else {
-                        print("Ahhhhhh No")
+                        //TODO: Show user error
+                        print("Error logging in: \(errorString)")
                     }
                 }
                 
             } else {
+                //TODO: Show user error
                 //Error no password
             }
         } else {
+            //TODO: Show user error
             // Error - no user name entered
         }
     }
