@@ -102,6 +102,7 @@ extension UdClient {
 */
     
     
+    
     func getUserData(completionHandler: (success: Bool, result: UdUser?, errorString: String?) -> Void) {
         var mutableMethod : String = Methods.GetPublicUserData
         mutableMethod = UdClient.subtituteKeyInMethod(mutableMethod, key: UdClient.URLKeys.UserID, value: String(UdClient.sharedInstance().userID!))!
@@ -119,6 +120,27 @@ extension UdClient {
             }
         }
 
+    }
+
+    func deleteSessionID(completionHandler: (success: Bool, errorString: String?) -> Void) {
+        taskForDELETEMethod()  { (result, error) -> Void in
+            if let error = error {
+                completionHandler(success: false, errorString: error.localizedDescription)
+            } else {
+                if let sessionDict = (result as? [String:AnyObject]) where sessionDict.indexForKey("session") != nil {
+                    if let sessionID = (sessionDict[JSONResponseKeys.Session] as! [String:AnyObject])["id"] {
+                        print("Deleted Session Key: \(sessionID)")
+                        completionHandler(success: true, errorString: nil)
+                    } else {
+                        print("Session dict contains no key id")
+                        completionHandler(success: false, errorString: "Session dict contains no key id")
+                    }
+                } else {
+                    completionHandler(success: false, errorString: "No user details returned")
+                }
+            }
+        }
+        
     }
     
     
