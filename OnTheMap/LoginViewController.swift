@@ -17,6 +17,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+
         
     }
     
@@ -28,15 +29,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
 
     @IBAction func signUpButtonTouch(sender: UIButton) {
         self.view.endEditing(true)
-        //TODO: Remove hack use of button
-        UdClient.sharedInstance().deleteSessionID() { (success, errorString) in
-            if success {
-                print("Logout successful")
-            } else {
-                print("Logout failed")
-            }
-        }
-//        UdClient.sharedInstance().loadUdacitySignUpPage()
+        UdClient.sharedInstance().loadUdacitySignUpPage()
     }
     
     @IBAction func loginButtonTouch(sender: UIButton) {
@@ -46,7 +39,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                 UdClient.sharedInstance().authenticateWithUsername(userName, password: password) {
                     (success, errorString) in
                     if success {
-//                        self.completeLogin()
+                        self.completeLogin()
                     } else {
                         //TODO: Show user error
                         print("Error logging in: \(errorString)")
@@ -64,11 +57,18 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     }
     
     func completeLogin() {
+        ParseClient.sharedInstance().loadStudentLocations() { (success, errorstring) in
+            if success {
+                print ("Student locations loaded - Count: \(StudentLocationCollection.sharedInstance().collection.count)")
+                
+            } else {
+                print ("Failed to load student locations")
+            }
+        }
         dispatch_async(dispatch_get_main_queue(),{
             let storyboard = UIStoryboard (name: "Main", bundle: nil)
             let resultVC = storyboard.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
             self.presentViewController(resultVC, animated: true, completion: nil)
-
         })
     }
     

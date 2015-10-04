@@ -1,16 +1,16 @@
 //
-//  UdClient.swift
+//  ParseClient.swift
 //  OnTheMap
 //
-//  Created by Derek Crous on 02/10/2015.
+//  Created by Derek Crous on 04/10/2015.
 //  Copyright © 2015 Ludocrous Software. All rights reserved.
 //
 
 import Foundation
 
-class UdClient : NSObject {
-
-
+class ParseClient : NSObject {
+    
+    
     var session : NSURLSession
     
     var sessionID: String? = nil
@@ -21,8 +21,8 @@ class UdClient : NSObject {
         session = NSURLSession.sharedSession()
         super.init()
     }
-
-    func taskForGETMethod(method: String, /*parameters: [String : AnyObject],*/  completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    
+    func taskForGETMethod(method: String,  completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
         //        var mutableParameters = parameters
@@ -32,6 +32,9 @@ class UdClient : NSObject {
         let urlString = Constants.BaseURLSecure + method //+ TMDBClient.escapedParameters(mutableParameters)
         let url = NSURL(string: urlString)!
         let request = NSMutableURLRequest(URL: url)
+        //TODO: Convert the fields to constants as well
+        request.addValue(Constants.ParseKey, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(Constants.APIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         
         /* 4. Make the request */
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
@@ -60,16 +63,18 @@ class UdClient : NSObject {
                 return
             }
             
-            let cleanData = UdClient.stripUdacitySecurityFromData(data)
+//            let cleanData = UdClient.stripUdacitySecurityFromData(data)
             
             /* 5/6. Parse the data and use the data (happens in completion handler) */
-            UdClient.parseJSONWithCompletionHandler(cleanData, completionHandler: completionHandler)
+            UdClient.parseJSONWithCompletionHandler(data, completionHandler: completionHandler)
         }
         
         /* 7. Start the request */
         task.resume()
         return task
     }
+    
+    /*
     
     func taskForDELETEMethod( completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
@@ -133,16 +138,16 @@ class UdClient : NSObject {
         
         return task
     }
-
+    
     
     func taskForPOSTMethod(method: String, /*parameters: [String : AnyObject],*/ jsonBody: [String:AnyObject], completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
-//        var mutableParameters = parameters
-//        mutableParameters[ParameterKeys.ApiKey] = Constants.ApiKey
+        //        var mutableParameters = parameters
+        //        mutableParameters[ParameterKeys.ApiKey] = Constants.ApiKey
         
         /* 2/3. Build the URL and configure the request */
-        let urlString = Constants.BaseURLSecure + method //+ TMDBClient.escapedParameters(mutableParameters)
+        let urlString = Constants.BaseURLSecure + Methods.CreateSession //+ TMDBClient.escapedParameters(mutableParameters)
         let url = NSURL(string: urlString)!
         let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "POST"
@@ -191,17 +196,14 @@ class UdClient : NSObject {
         
         return task
     }
-
+    */
+    
     class func subtituteKeyInMethod(method: String, key: String, value: String) -> String? {
         if method.rangeOfString("{\(key)}") != nil {
             return method.stringByReplacingOccurrencesOfString("{\(key)}", withString: value)
         } else {
             return nil
         }
-    }
-    
-    class func stripUdacitySecurityFromData (data: NSData) -> NSData {
-        return data.subdataWithRange(NSMakeRange(5, data.length - 5))
     }
     
     /* Helper: Given raw JSON, return a usable Foundation object */
@@ -217,14 +219,14 @@ class UdClient : NSObject {
         
         completionHandler(result: parsedResult, error: nil)
     }
-
     
-//MARK: Singleton of class
     
-    class func sharedInstance() -> UdClient {
+    //MARK: Singleton of class
+    
+    class func sharedInstance() -> ParseClient {
         
         struct Singleton {
-            static var sharedInstance = UdClient()
+            static var sharedInstance = ParseClient()
         }
         
         return Singleton.sharedInstance

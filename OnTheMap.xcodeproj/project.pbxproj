@@ -36,6 +36,10 @@
 		A9681E471BBEA259005F6418 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9681E441BBEA259005F6418 /* Roboto-Regular.ttf */; settings = {ASSET_TAGS = (); }; };
 		A9681E481BBEA259005F6418 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9681E451BBEA259005F6418 /* Roboto-Thin.ttf */; settings = {ASSET_TAGS = (); }; };
 		A9681E4A1BBEE91A005F6418 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9681E491BBEE91A005F6418 /* LoginViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		A9F477FB1BC1602800751D58 /* ParseStudentLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F477FA1BC1602800751D58 /* ParseStudentLocation.swift */; settings = {ASSET_TAGS = (); }; };
+		A9F477FD1BC1603F00751D58 /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F477FC1BC1603F00751D58 /* ParseClient.swift */; settings = {ASSET_TAGS = (); }; };
+		A9F477FF1BC1606000751D58 /* ParseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F477FE1BC1606000751D58 /* ParseConstants.swift */; settings = {ASSET_TAGS = (); }; };
+		A9F478011BC1607C00751D58 /* ParseConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F478001BC1607C00751D58 /* ParseConvenience.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +74,10 @@
 		A9681E441BBEA259005F6418 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Regular.ttf"; path = "Fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		A9681E451BBEA259005F6418 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Thin.ttf"; path = "Fonts/Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		A9681E491BBEE91A005F6418 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		A9F477FA1BC1602800751D58 /* ParseStudentLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseStudentLocation.swift; sourceTree = "<group>"; };
+		A9F477FC1BC1603F00751D58 /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
+		A9F477FE1BC1606000751D58 /* ParseConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConstants.swift; sourceTree = "<group>"; };
+		A9F478001BC1607C00751D58 /* ParseConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConvenience.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +228,10 @@
 		A99C7AED1BBFF71A00C974C9 /* Parse */ = {
 			isa = PBXGroup;
 			children = (
+				A9F477FA1BC1602800751D58 /* ParseStudentLocation.swift */,
+				A9F477FC1BC1603F00751D58 /* ParseClient.swift */,
+				A9F477FE1BC1606000751D58 /* ParseConstants.swift */,
+				A9F478001BC1607C00751D58 /* ParseConvenience.swift */,
 			);
 			name = Parse;
 			sourceTree = "<group>";
@@ -313,13 +325,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				A91920111BBF0C3C0096272E /* UdConvenience.swift in Sources */,
+				A9F478011BC1607C00751D58 /* ParseConvenience.swift in Sources */,
 				A9681E4A1BBEE91A005F6418 /* LoginViewController.swift in Sources */,
+				A9F477FF1BC1606000751D58 /* ParseConstants.swift in Sources */,
 				A919200F1BBF0BF30096272E /* UdClient.swift in Sources */,
 				A9681DEC1BBE9425005F6418 /* SecondViewController.swift in Sources */,
 				A9681DE81BBE9425005F6418 /* AppDelegate.swift in Sources */,
 				A91920131BBF19020096272E /* UdConstants.swift in Sources */,
+				A9F477FD1BC1603F00751D58 /* ParseClient.swift in Sources */,
 				A9681DEA1BBE9425005F6418 /* FirstViewController.swift in Sources */,
 				A91920151BBF1F710096272E /* UdUser.swift in Sources */,
+				A9F477FB1BC1602800751D58 /* ParseStudentLocation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
