@@ -166,6 +166,7 @@ class UdClient : NSObject {
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
                 if let response = response as? NSHTTPURLResponse {
                     print("Your request returned an invalid response! Status code: \(response.statusCode)!")
+                    completionHandler(result: nil, error:  NSError(domain: "taskForPostMethod", code: 1, userInfo: ["ErrorString":"Invalid Username"]))
                 } else if let response = response {
                     print("Your request returned an invalid response! Response: \(response)!")
                 } else {

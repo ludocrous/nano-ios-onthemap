@@ -42,6 +42,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                         self.completeLogin()
                     } else {
                         //TODO: Show user error
+                        self.showErrorAlert("Cannot login in")
                         print("Error logging in: \(errorString)")
                     }
                 }
@@ -56,20 +57,28 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         }
     }
     
+    func showErrorAlert(errorMessage: String) {
+        dispatch_async(dispatch_get_main_queue(),{
+            let myAlert = UIAlertController(title: errorMessage, message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+            myAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(myAlert,animated: true, completion: nil)
+        })
+        
+    }
+    
     func completeLogin() {
         ParseClient.sharedInstance().loadStudentLocations() { (success, errorstring) in
             if success {
                 print ("Student locations loaded - Count: \(StudentLocationCollection.sharedInstance().collection.count)")
-                
+                dispatch_async(dispatch_get_main_queue(),{
+                    let storyboard = UIStoryboard (name: "Main", bundle: nil)
+                    let resultVC = storyboard.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
+                    self.presentViewController(resultVC, animated: true, completion: nil)
+                })
             } else {
                 print ("Failed to load student locations")
             }
         }
-        dispatch_async(dispatch_get_main_queue(),{
-            let storyboard = UIStoryboard (name: "Main", bundle: nil)
-            let resultVC = storyboard.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
-            self.presentViewController(resultVC, animated: true, completion: nil)
-        })
     }
     
     //MARK: Keyboard handling code

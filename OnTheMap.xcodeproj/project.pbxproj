@@ -12,8 +12,8 @@
 		A91920131BBF19020096272E /* UdConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91920121BBF19020096272E /* UdConstants.swift */; settings = {ASSET_TAGS = (); }; };
 		A91920151BBF1F710096272E /* UdUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91920141BBF1F710096272E /* UdUser.swift */; settings = {ASSET_TAGS = (); }; };
 		A9681DE81BBE9425005F6418 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9681DE71BBE9425005F6418 /* AppDelegate.swift */; };
-		A9681DEA1BBE9425005F6418 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9681DE91BBE9425005F6418 /* FirstViewController.swift */; };
-		A9681DEC1BBE9425005F6418 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9681DEB1BBE9425005F6418 /* SecondViewController.swift */; };
+		A9681DEA1BBE9425005F6418 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9681DE91BBE9425005F6418 /* MapViewController.swift */; };
+		A9681DEC1BBE9425005F6418 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9681DEB1BBE9425005F6418 /* ListViewController.swift */; };
 		A9681DEF1BBE9425005F6418 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9681DED1BBE9425005F6418 /* Main.storyboard */; };
 		A9681DF11BBE9425005F6418 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9681DF01BBE9425005F6418 /* Assets.xcassets */; };
 		A9681DF41BBE9425005F6418 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9681DF21BBE9425005F6418 /* LaunchScreen.storyboard */; };
@@ -49,8 +49,8 @@
 		A91920141BBF1F710096272E /* UdUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdUser.swift; sourceTree = "<group>"; };
 		A9681DE41BBE9425005F6418 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9681DE71BBE9425005F6418 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A9681DE91BBE9425005F6418 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		A9681DEB1BBE9425005F6418 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		A9681DE91BBE9425005F6418 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		A9681DEB1BBE9425005F6418 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		A9681DEE1BBE9425005F6418 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A9681DF01BBE9425005F6418 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A9681DF31BBE9425005F6418 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -168,8 +168,8 @@
 		A9681E201BBE9C19005F6418 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				A9681DEB1BBE9425005F6418 /* SecondViewController.swift */,
-				A9681DE91BBE9425005F6418 /* FirstViewController.swift */,
+				A9681DEB1BBE9425005F6418 /* ListViewController.swift */,
+				A9681DE91BBE9425005F6418 /* MapViewController.swift */,
 				A9681E491BBEE91A005F6418 /* LoginViewController.swift */,
 			);
 			name = Controller;
@@ -329,11 +329,11 @@
 				A9681E4A1BBEE91A005F6418 /* LoginViewController.swift in Sources */,
 				A9F477FF1BC1606000751D58 /* ParseConstants.swift in Sources */,
 				A919200F1BBF0BF30096272E /* UdClient.swift in Sources */,
-				A9681DEC1BBE9425005F6418 /* SecondViewController.swift in Sources */,
+				A9681DEC1BBE9425005F6418 /* ListViewController.swift in Sources */,
 				A9681DE81BBE9425005F6418 /* AppDelegate.swift in Sources */,
 				A91920131BBF19020096272E /* UdConstants.swift in Sources */,
 				A9F477FD1BC1603F00751D58 /* ParseClient.swift in Sources */,
-				A9681DEA1BBE9425005F6418 /* FirstViewController.swift in Sources */,
+				A9681DEA1BBE9425005F6418 /* MapViewController.swift in Sources */,
 				A91920151BBF1F710096272E /* UdUser.swift in Sources */,
 				A9F477FB1BC1602800751D58 /* ParseStudentLocation.swift in Sources */,
 			);

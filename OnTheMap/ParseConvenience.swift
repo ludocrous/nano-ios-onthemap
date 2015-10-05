@@ -15,12 +15,10 @@ extension ParseClient {
     func loadStudentLocations (completionHandler: (success: Bool, errorString: String?) -> Void) {
         
         self.getStudentLocations() { (success, errorString) in
-            
-        
-        if success {
-            completionHandler(success: true, errorString: nil)
-        } else {
-            completionHandler(success: false,  errorString: errorString)
+            if success {
+                completionHandler(success: true, errorString: nil)
+            } else {
+                completionHandler(success: false,  errorString: errorString)
             }
         }
     }
@@ -32,9 +30,8 @@ extension ParseClient {
             } else {
                 if let resultsDict = (result as? [String:AnyObject]) where resultsDict.indexForKey(JSONResponseKeys.Results) != nil {
                     if let studLocArray = resultsDict[JSONResponseKeys.Results] as? [[String:AnyObject]] {
-                        StudentLocationCollection.populateCollectionFromResults(true, results: studLocArray)
-                        print("The Results:")
-                        print(StudentLocationCollection.sharedInstance().collection)
+                        StudentLocationCollection.sharedInstance().populateCollectionFromResults(true, results: studLocArray)
+                        print("Students Loaded: \(StudentLocationCollection.sharedInstance().collection.count)")
                         completionHandler(success: true, errorString: nil)
 
                     } else {
