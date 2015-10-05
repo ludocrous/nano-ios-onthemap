@@ -18,7 +18,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -33,6 +32,13 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     }
     
     @IBAction func loginButtonTouch(sender: UIButton) {
+        //TODO: Remove this code
+        if true {
+            StudentLocationCollection.sharedInstance().selfPopulateForDemo()
+            moveToMainNavController()
+            return
+        }
+    
         self.view.endEditing(false)
         if let userName = emailTextField.text {
             if let password = passwordTextField.text {
@@ -66,14 +72,18 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         
     }
     
+    func moveToMainNavController() {
+        let storyboard = UIStoryboard (name: "Main", bundle: nil)
+        let resultVC = storyboard.instantiateViewControllerWithIdentifier("MainNavController") as! UINavigationController
+        self.presentViewController(resultVC, animated: true, completion: nil)
+    }
+    
     func completeLogin() {
         ParseClient.sharedInstance().loadStudentLocations() { (success, errorstring) in
             if success {
                 print ("Student locations loaded - Count: \(StudentLocationCollection.sharedInstance().collection.count)")
                 dispatch_async(dispatch_get_main_queue(),{
-                    let storyboard = UIStoryboard (name: "Main", bundle: nil)
-                    let resultVC = storyboard.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
-                    self.presentViewController(resultVC, animated: true, completion: nil)
+                    self.moveToMainNavController()
                 })
             } else {
                 print ("Failed to load student locations")
