@@ -1,5 +1,5 @@
 //
-//  ParseStudent.swift
+//  StudentLocation.swift
 //  OnTheMap
 //
 //  Created by Derek Crous on 04/10/2015.
@@ -13,6 +13,7 @@ import MapKit
 struct StudentLocation {
     var firstName: String?
     var lastName: String?
+    var mapString: String?
     var mediaURL: String?
     var objectID: String?
     var uniqueKey: String?
@@ -24,12 +25,16 @@ struct StudentLocation {
             return "\(firstName == nil ? emptyString : firstName!) \(lastName == nil ? emptyString :  lastName!)".stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         }
     }
+    init() {
+        
+    }
     
     init?(resultDict: [String:AnyObject]) {
         objectID = resultDict[ParseClient.JSONResponseKeys.ResultsObjectID] as? String
         uniqueKey = resultDict[ParseClient.JSONResponseKeys.ResultsUniqueKey] as? String
         firstName = resultDict[ParseClient.JSONResponseKeys.ResultsFirstName] as? String
         lastName = resultDict[ParseClient.JSONResponseKeys.ResultsLastName] as? String
+        mapString = resultDict[ParseClient.JSONResponseKeys.ResultsMapString] as? String
         mediaURL = resultDict[ParseClient.JSONResponseKeys.ResultsMediaURL] as? String
         latitude = resultDict[ParseClient.JSONResponseKeys.ResultsLatitude] as? Double
         longitude = resultDict[ParseClient.JSONResponseKeys.ResultsLongitude] as? Double

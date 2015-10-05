@@ -16,7 +16,7 @@ extension ParseClient {
         
         self.getStudentLocations() { (success, errorString) in
             //TODO: Remove this code
-            NSThread.sleepForTimeInterval(NSTimeInterval(3))
+//            NSThread.sleepForTimeInterval(NSTimeInterval(3))
                 if success {
                 completionHandler(success: true, errorString: nil)
             } else {
@@ -47,7 +47,31 @@ extension ParseClient {
         }
         
     }
-    
+
+    func postStudentLocation(completionHandler: (success: Bool, errorString: String?) -> Void) {
+        let jsonBody: [String: AnyObject] = ParseClient.buildJSONBodyFromUdUser()
+        taskForPOSTMethod(Methods.PostStudentLocation,jsonBody: jsonBody)  { (result, error) -> Void in
+            if let error = error {
+                completionHandler(success: false, errorString: error.localizedDescription)
+            } else {
+                if let resultsDict = (result as? [String:AnyObject]) where resultsDict.indexForKey(JSONResponseKeys.Results) != nil {
+                    if let studLocArray = resultsDict[JSONResponseKeys.Results] as? [[String:AnyObject]] {
+                        StudentLocationCollection.sharedInstance().populateCollectionFromResults(true, results: studLocArray)
+                        print("Students Loaded: \(StudentLocationCollection.sharedInstance().collection.count)")
+                        completionHandler(success: true, errorString: nil)
+                        
+                    } else {
+                        completionHandler(success: false, errorString: "Error unpacking student locations")
+                    }
+                    
+                } else {
+                    completionHandler(success: false, errorString: "No student location details returned")
+                }
+            }
+        }
+        
+    }
+
 /*
     func postSessionID(username: String, password: String, completionHandler: (success: Bool, sessionID: String?, errorString: String?) -> Void)  {
         

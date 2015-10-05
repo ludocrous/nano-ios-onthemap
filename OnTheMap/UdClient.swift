@@ -15,7 +15,6 @@ class UdClient : NSObject {
     
     var sessionID: String? = nil
     var userID: String? = nil
-    var user: UdUser? = nil
     
     override init() {
         session = NSURLSession.sharedSession()

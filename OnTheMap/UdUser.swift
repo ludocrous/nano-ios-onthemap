@@ -10,15 +10,41 @@ import Foundation
 
 // Class implementation for Udacity User.
 class UdUser {
-    var id: String?
-    var firstName: String?
-    var lastName: String?
-    
-    class func createUserFromResults(dictionary: [String: AnyObject]) -> UdUser {
-        let result = UdUser()
-        result.firstName = dictionary[UdClient.JSONResponseKeys.UserFirstName] as? String
-        result.lastName = dictionary[UdClient.JSONResponseKeys.UserLastName] as? String
-        result.id = dictionary[UdClient.JSONResponseKeys.UserID] as? String
-        return result
+    var key: String? {
+        willSet(newKey)
+        {
+            studentLocation.uniqueKey = newKey
+        }
     }
+    var firstName: String? {
+        willSet(newFirstName)
+        {
+            studentLocation.firstName = newFirstName
+        }
+    }
+    var lastName: String? {
+        willSet(newLastName)
+        {
+            studentLocation.lastName = newLastName
+        }
+    }
+    var studentLocation: StudentLocation = StudentLocation()
+    
+    
+    func setPropertiesFromResults(dictionary: [String: AnyObject]) {
+        self.firstName = dictionary[UdClient.JSONResponseKeys.UserFirstName] as? String
+        self.lastName = dictionary[UdClient.JSONResponseKeys.UserLastName] as? String
+        self.key = dictionary[UdClient.JSONResponseKeys.UserKey] as? String
+    }
+    
+    
+    class func sharedInstance() -> UdUser {
+        
+        struct Singleton {
+            static var sharedInstance = UdUser()
+        }
+        
+        return Singleton.sharedInstance
+    }
+
 }

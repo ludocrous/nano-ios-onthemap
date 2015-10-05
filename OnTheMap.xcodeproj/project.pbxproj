@@ -39,7 +39,7 @@
 		A9A277FE1BC30A9E00E0CB02 /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A277FD1BC30A9E00E0CB02 /* BorderedButton.swift */; settings = {ASSET_TAGS = (); }; };
 		A9E09DE91BC2C17C00F80A38 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E09DE81BC2C17C00F80A38 /* TabBarController.swift */; settings = {ASSET_TAGS = (); }; };
 		A9E09DEB1BC2C42E00F80A38 /* StudentLocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E09DEA1BC2C42E00F80A38 /* StudentLocationController.swift */; settings = {ASSET_TAGS = (); }; };
-		A9F477FB1BC1602800751D58 /* ParseStudentLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F477FA1BC1602800751D58 /* ParseStudentLocation.swift */; settings = {ASSET_TAGS = (); }; };
+		A9F477FB1BC1602800751D58 /* StudentLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F477FA1BC1602800751D58 /* StudentLocation.swift */; settings = {ASSET_TAGS = (); }; };
 		A9F477FD1BC1603F00751D58 /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F477FC1BC1603F00751D58 /* ParseClient.swift */; settings = {ASSET_TAGS = (); }; };
 		A9F477FF1BC1606000751D58 /* ParseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F477FE1BC1606000751D58 /* ParseConstants.swift */; settings = {ASSET_TAGS = (); }; };
 		A9F478011BC1607C00751D58 /* ParseConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F478001BC1607C00751D58 /* ParseConvenience.swift */; settings = {ASSET_TAGS = (); }; };
@@ -80,7 +80,7 @@
 		A9A277FD1BC30A9E00E0CB02 /* BorderedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
 		A9E09DE81BC2C17C00F80A38 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		A9E09DEA1BC2C42E00F80A38 /* StudentLocationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentLocationController.swift; sourceTree = "<group>"; };
-		A9F477FA1BC1602800751D58 /* ParseStudentLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseStudentLocation.swift; sourceTree = "<group>"; };
+		A9F477FA1BC1602800751D58 /* StudentLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentLocation.swift; sourceTree = "<group>"; };
 		A9F477FC1BC1603F00751D58 /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
 		A9F477FE1BC1606000751D58 /* ParseConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConstants.swift; sourceTree = "<group>"; };
 		A9F478001BC1607C00751D58 /* ParseConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConvenience.swift; sourceTree = "<group>"; };
@@ -150,6 +150,7 @@
 		A9681E1D1BBE9BD9005F6418 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A9B579331BC31C5300E8BD2A /* StudentLocation */,
 				A9681E1E1BBE9BE7005F6418 /* Clients */,
 			);
 			name = Model;
@@ -237,12 +238,19 @@
 		A99C7AED1BBFF71A00C974C9 /* Parse */ = {
 			isa = PBXGroup;
 			children = (
-				A9F477FA1BC1602800751D58 /* ParseStudentLocation.swift */,
 				A9F477FC1BC1603F00751D58 /* ParseClient.swift */,
 				A9F477FE1BC1606000751D58 /* ParseConstants.swift */,
 				A9F478001BC1607C00751D58 /* ParseConvenience.swift */,
 			);
 			name = Parse;
+			sourceTree = "<group>";
+		};
+		A9B579331BC31C5300E8BD2A /* StudentLocation */ = {
+			isa = PBXGroup;
+			children = (
+				A9F477FA1BC1602800751D58 /* StudentLocation.swift */,
+			);
+			name = StudentLocation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -347,7 +355,7 @@
 				A9F477FD1BC1603F00751D58 /* ParseClient.swift in Sources */,
 				A9681DEA1BBE9425005F6418 /* MapViewController.swift in Sources */,
 				A91920151BBF1F710096272E /* UdUser.swift in Sources */,
-				A9F477FB1BC1602800751D58 /* ParseStudentLocation.swift in Sources */,
+				A9F477FB1BC1602800751D58 /* StudentLocation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,6 +19,7 @@
             <string>Roboto-Regular</string>
             <string>Roboto-Regular</string>
             <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -292,6 +293,9 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="j4n-U7-XZd" id="ey1-rF-4Ov"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -383,16 +387,23 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="j4n-U7-XZd" id="8xb-BK-dyd"/>
+                                                </connections>
                                             </textField>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6lv-Hp-sP9" userLabel="MapButtonView">
                                                 <rect key="frame" x="0.0" y="300" width="600" height="100"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zCa-on-AE6" customClass="BorderedButton" customModule="OnTheMap" customModuleProvider="target">
-                                                        <rect key="frame" x="228" y="32" width="145" height="36"/>
+                                                    <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zCa-on-AE6">
+                                                        <rect key="frame" x="208" y="38" width="185" height="24"/>
                                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>
+                                                        <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
                                                         <state key="normal" title="Find on the Map">
                                                             <color key="titleColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="findOnMapButtonTouch:" destination="j4n-U7-XZd" eventType="touchUpInside" id="c8N-eG-hTx"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -414,12 +425,57 @@
                                             <constraint firstAttribute="bottom" secondItem="6lv-Hp-sP9" secondAttribute="bottom" id="yQn-f1-Px7"/>
                                         </constraints>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="30q-Sw-D3a" userLabel="MapContainer">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
+                                        <subviews>
+                                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spA-uN-wOn" userLabel="MapView">
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
+                                            </mapView>
+                                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ksi-ye-V2Y" userLabel="SubmitButtonView">
+                                                <rect key="frame" x="0.0" y="300" width="600" height="100"/>
+                                                <subviews>
+                                                    <button alpha="0.75" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q9q-H2-elu">
+                                                        <rect key="frame" x="248" y="38" width="105" height="24"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>
+                                                        <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
+                                                        <state key="normal" title="Submit">
+                                                            <color key="titleColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="submitButtonTouch:" destination="j4n-U7-XZd" eventType="touchUpInside" id="wpu-aS-b4T"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstItem="q9q-H2-elu" firstAttribute="centerY" secondItem="ksi-ye-V2Y" secondAttribute="centerY" id="CiN-n9-bqb"/>
+                                                    <constraint firstItem="q9q-H2-elu" firstAttribute="centerX" secondItem="ksi-ye-V2Y" secondAttribute="centerX" id="dOw-Nu-aBS"/>
+                                                    <constraint firstAttribute="height" constant="100" id="mC5-QP-zup"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="spA-uN-wOn" firstAttribute="leading" secondItem="30q-Sw-D3a" secondAttribute="leading" id="9SX-CV-vVr"/>
+                                            <constraint firstAttribute="bottom" secondItem="ksi-ye-V2Y" secondAttribute="bottom" id="QPs-nP-pLu"/>
+                                            <constraint firstAttribute="trailing" secondItem="spA-uN-wOn" secondAttribute="trailing" id="TCG-wL-mok"/>
+                                            <constraint firstAttribute="bottom" secondItem="spA-uN-wOn" secondAttribute="bottom" id="WUW-4k-4OE"/>
+                                            <constraint firstItem="ksi-ye-V2Y" firstAttribute="leading" secondItem="30q-Sw-D3a" secondAttribute="leading" id="WeG-Jr-wSu"/>
+                                            <constraint firstAttribute="trailing" secondItem="ksi-ye-V2Y" secondAttribute="trailing" id="oQq-6c-bHU"/>
+                                            <constraint firstItem="spA-uN-wOn" firstAttribute="top" secondItem="30q-Sw-D3a" secondAttribute="top" id="pk8-yA-1si"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="2pk-5u-kzf" firstAttribute="top" secondItem="VTK-n8-tW2" secondAttribute="top" id="1Jh-wh-FMY"/>
                                     <constraint firstItem="2pk-5u-kzf" firstAttribute="leading" secondItem="VTK-n8-tW2" secondAttribute="leading" id="2ix-NY-yFI"/>
+                                    <constraint firstAttribute="bottom" secondItem="30q-Sw-D3a" secondAttribute="bottom" id="4fh-Ef-um4"/>
+                                    <constraint firstItem="30q-Sw-D3a" firstAttribute="top" secondItem="VTK-n8-tW2" secondAttribute="top" id="Ahz-h3-xWW"/>
+                                    <constraint firstItem="30q-Sw-D3a" firstAttribute="leading" secondItem="VTK-n8-tW2" secondAttribute="leading" id="E87-Tf-8XR"/>
                                     <constraint firstAttribute="trailing" secondItem="2pk-5u-kzf" secondAttribute="trailing" id="Kkq-xp-Gna"/>
+                                    <constraint firstAttribute="trailing" secondItem="30q-Sw-D3a" secondAttribute="trailing" id="chX-vb-QBY"/>
                                     <constraint firstAttribute="bottom" secondItem="2pk-5u-kzf" secondAttribute="bottom" id="y2L-r5-S5B"/>
                                 </constraints>
                             </view>
@@ -442,9 +498,12 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="cancelButton" destination="oA7-Bo-HYZ" id="wq2-Vq-6ZX"/>
-                        <outlet property="findOnMapButton" destination="zCa-on-AE6" id="uEA-we-ZgU"/>
+                        <outlet property="geoEntryView" destination="2pk-5u-kzf" id="Lig-va-uCq"/>
                         <outlet property="geoLabelView" destination="G1R-yG-kKc" id="rXC-he-kHS"/>
                         <outlet property="linkTextField" destination="xKN-rR-Hrw" id="Sme-kB-Dwl"/>
+                        <outlet property="mapContainerView" destination="30q-Sw-D3a" id="Wfc-gg-6AQ"/>
+                        <outlet property="mapView" destination="spA-uN-wOn" id="Ye1-DY-kXP"/>
+                        <outlet property="submitButtonView" destination="ksi-ye-V2Y" id="015-NC-XNq"/>
                         <outlet property="urlEntryView" destination="XLd-Jf-TAj" id="Jxp-Sw-aG6"/>
                     </connections>
                 </viewController>

@@ -19,7 +19,7 @@ extension UdClient {
             if success {
                 self.getUserData() {(success, result, errorString) in
                     if success {
-                        print("Found details for: \(result?.id) First: \(result?.firstName) Last: \(result?.lastName)")
+                        print("Found details for: \(result?.key) First: \(result?.firstName) Last: \(result?.lastName)")
                         completionHandler(success: true, errorString: nil)
                     } else {
                         //What now
@@ -112,8 +112,8 @@ extension UdClient {
             } else {
                 if let userDict = (result as? [String:AnyObject]) where userDict.indexForKey("user") != nil {
                     let userDetail = userDict[JSONResponseKeys.User] as! [String:AnyObject]
-                    self.user = UdUser.createUserFromResults(userDetail)
-                    completionHandler(success: true, result: self.user, errorString: nil)
+                    UdUser.sharedInstance().setPropertiesFromResults(userDetail)
+                    completionHandler(success: true, result: UdUser.sharedInstance(), errorString: nil)
                 } else {
                     completionHandler(success: false, result: nil, errorString: "No user details returned")
                 }
