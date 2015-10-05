@@ -9,18 +9,50 @@
 import UIKit
 
 class StudentLocationController: UIViewController {
+    
+    enum SLLayoutState {
+        case GeoEntry
+        case UrlEntry
+    }
+    
+    let oceanColour = UIColor(red: 0.0, green: 0.25, blue: 0.5, alpha: 1.0)
+    var currentLayoutState: SLLayoutState = .UrlEntry
 
+    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var geoLabelView: UIView!
+    @IBOutlet weak var urlEntryView: UIView!
+    @IBOutlet weak var linkTextField: UITextField!
+    @IBOutlet weak var findOnMapButton: BorderedButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        configureForState(currentLayoutState)
     }
     
+    func configureForState(state: SLLayoutState) {
+        switch state {
+        case .GeoEntry:
+            print("Engaging Geo Entry")
+            geoLabelView.hidden = false
+            urlEntryView.hidden = true
+            cancelButton.setTitleColor(oceanColour, forState: .Normal)
+            
+            
+            
+        case .UrlEntry:
+            print("Engaging Url Entry")
+            geoLabelView.hidden = true
+            urlEntryView.hidden = false
+            cancelButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+
+        }
+    }
+    
+    @IBAction func cancelButtonTouch(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 
     /*
     // MARK: - Navigation

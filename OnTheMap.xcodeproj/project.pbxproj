@@ -36,6 +36,7 @@
 		A9681E471BBEA259005F6418 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9681E441BBEA259005F6418 /* Roboto-Regular.ttf */; settings = {ASSET_TAGS = (); }; };
 		A9681E481BBEA259005F6418 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9681E451BBEA259005F6418 /* Roboto-Thin.ttf */; settings = {ASSET_TAGS = (); }; };
 		A9681E4A1BBEE91A005F6418 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9681E491BBEE91A005F6418 /* LoginViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		A9A277FE1BC30A9E00E0CB02 /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A277FD1BC30A9E00E0CB02 /* BorderedButton.swift */; settings = {ASSET_TAGS = (); }; };
 		A9E09DE91BC2C17C00F80A38 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E09DE81BC2C17C00F80A38 /* TabBarController.swift */; settings = {ASSET_TAGS = (); }; };
 		A9E09DEB1BC2C42E00F80A38 /* StudentLocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E09DEA1BC2C42E00F80A38 /* StudentLocationController.swift */; settings = {ASSET_TAGS = (); }; };
 		A9F477FB1BC1602800751D58 /* ParseStudentLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F477FA1BC1602800751D58 /* ParseStudentLocation.swift */; settings = {ASSET_TAGS = (); }; };
@@ -76,6 +77,7 @@
 		A9681E441BBEA259005F6418 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Regular.ttf"; path = "Fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		A9681E451BBEA259005F6418 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Thin.ttf"; path = "Fonts/Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		A9681E491BBEE91A005F6418 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		A9A277FD1BC30A9E00E0CB02 /* BorderedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
 		A9E09DE81BC2C17C00F80A38 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		A9E09DEA1BC2C42E00F80A38 /* StudentLocationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentLocationController.swift; sourceTree = "<group>"; };
 		A9F477FA1BC1602800751D58 /* ParseStudentLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseStudentLocation.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 		A9681E1F1BBE9C00005F6418 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A9A277FD1BC30A9E00E0CB02 /* BorderedButton.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 				A9F478011BC1607C00751D58 /* ParseConvenience.swift in Sources */,
 				A9681E4A1BBEE91A005F6418 /* LoginViewController.swift in Sources */,
 				A9E09DEB1BC2C42E00F80A38 /* StudentLocationController.swift in Sources */,
+				A9A277FE1BC30A9E00E0CB02 /* BorderedButton.swift in Sources */,
 				A9F477FF1BC1606000751D58 /* ParseConstants.swift in Sources */,
 				A919200F1BBF0BF30096272E /* UdClient.swift in Sources */,
 				A9681DEC1BBE9425005F6418 /* ListViewController.swift in Sources */,
