@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ListViewController: UIViewController {
+class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +19,28 @@ class ListViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return StudentLocationCollection.sharedInstance().collection.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell")
+        
+        cell?.textLabel?.text = StudentLocationCollection.sharedInstance().collection[indexPath.row].fullName
+        if let url = StudentLocationCollection.sharedInstance().collection[indexPath.row].mediaURL {
+            cell?.detailTextLabel?.text = url
+        } else {
+            cell?.detailTextLabel?.text = ""
+        }
+        return cell!
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if let url = StudentLocationCollection.sharedInstance().collection[indexPath.row].mediaURL {
+            UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+        }
+    }
 
 }
 

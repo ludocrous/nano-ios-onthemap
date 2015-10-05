@@ -18,6 +18,12 @@ struct StudentLocation {
     var uniqueKey: String?
     var latitude: Double?
     var longitude: Double?
+    var fullName: String {
+        get {
+            let emptyString = ""
+            return "\(firstName == nil ? emptyString : firstName!) \(lastName == nil ? emptyString :  lastName!)".stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        }
+    }
     
     init?(resultDict: [String:AnyObject]) {
         objectID = resultDict[ParseClient.JSONResponseKeys.ResultsObjectID] as? String
@@ -33,6 +39,8 @@ struct StudentLocation {
         }
     }
     
+    
+    
     func asMapAnnotation () -> MKPointAnnotation {
         // Notice that the float values are being used to create CLLocationDegree values.
         // This is a version of the Double type.
@@ -44,7 +52,7 @@ struct StudentLocation {
         
         
         // Here we create the annotation and set its coordiate, title, and subtitle properties
-        var annotation = MKPointAnnotation()
+        let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
         annotation.title = "\(firstName!) \(lastName!)"
         annotation.subtitle = mediaURL!
