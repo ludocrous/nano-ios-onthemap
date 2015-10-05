@@ -3,6 +3,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Roboto-Medium.ttf">
@@ -59,7 +60,17 @@
                             <constraint firstItem="kLa-od-DLd" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="rpy-Cm-sy1"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="XHA-OM-nri"/>
+                    <navigationItem key="navigationItem" title="On The Map" id="XHA-OM-nri">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="QvA-in-Rc2"/>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="refresh" id="jKb-aO-SoX">
+                                <connections>
+                                    <action selector="refreshButtonTouch:" destination="9pv-A4-QxB" id="QSy-yq-Xy6"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="pin" id="5nY-YM-8zA"/>
+                        </rightBarButtonItems>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="kLa-od-DLd" id="8da-h1-C2z"/>
                     </connections>
@@ -68,7 +79,7 @@
             </objects>
             <point key="canvasLocation" x="1562" y="-320"/>
         </scene>
-        <!--List View Controller-->
+        <!--On The Map-->
         <scene sceneID="wg7-f3-ORb">
             <objects>
                 <viewController id="8rJ-Kc-sve" customClass="ListViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
@@ -143,7 +154,13 @@
                             <constraint firstItem="fjX-Fo-vLz" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" id="mYC-Eu-DU2"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="8zw-qP-glL"/>
+                    <navigationItem key="navigationItem" title="On The Map" id="8zw-qP-glL">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="S7Z-eB-cdX"/>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="refresh" id="tst-j6-Be7"/>
+                            <barButtonItem image="pin" id="hTq-mV-B2g"/>
+                        </rightBarButtonItems>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>

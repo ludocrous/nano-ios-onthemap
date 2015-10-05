@@ -15,7 +15,9 @@ extension ParseClient {
     func loadStudentLocations (completionHandler: (success: Bool, errorString: String?) -> Void) {
         
         self.getStudentLocations() { (success, errorString) in
-            if success {
+            //TODO: Remove this code
+            NSThread.sleepForTimeInterval(NSTimeInterval(3))
+                if success {
                 completionHandler(success: true, errorString: nil)
             } else {
                 completionHandler(success: false,  errorString: errorString)
