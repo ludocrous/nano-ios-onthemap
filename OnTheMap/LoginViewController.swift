@@ -33,7 +33,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     
     @IBAction func loginButtonTouch(sender: UIButton) {
         //TODO: Remove this code
-        if true {
+        if false {
             StudentLocationCollection.sharedInstance().selfPopulateForDemo()
             moveToMainNavController()
             return
@@ -48,7 +48,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                         self.completeLogin()
                     } else {
                         //TODO: Show user error
-                        self.showErrorAlert("Cannot login in")
+                        displayAlertOnMainThread("Cannot log in", message: nil, onViewController: self)
+//                        self.showErrorAlert("Cannot login in")
                         print("Error logging in: \(errorString)")
                     }
                 }
@@ -61,15 +62,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             //TODO: Show user error
             // Error - no user name entered
         }
-    }
-    
-    func showErrorAlert(errorMessage: String) {
-        dispatch_async(dispatch_get_main_queue(),{
-            let myAlert = UIAlertController(title: errorMessage, message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-            myAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
-            self.presentViewController(myAlert,animated: true, completion: nil)
-        })
-        
     }
     
     func moveToMainNavController() {

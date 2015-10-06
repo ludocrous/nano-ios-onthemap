@@ -28,8 +28,21 @@ class UdUser {
             studentLocation.lastName = newLastName
         }
     }
-    var studentLocation: StudentLocation = StudentLocation()
+    var studentLocation: StudentLocation {
+        didSet {
+            studentLocation.firstName = self.firstName
+            studentLocation.lastName = self.lastName
+            studentLocation.uniqueKey = self.key
+        }
+    }
     
+    init () {
+        studentLocation = StudentLocation()
+    }
+    
+    func resetLocation() {
+        studentLocation = StudentLocation()
+    }
     
     func setPropertiesFromResults(dictionary: [String: AnyObject]) {
         self.firstName = dictionary[UdClient.JSONResponseKeys.UserFirstName] as? String

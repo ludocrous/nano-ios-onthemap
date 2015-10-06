@@ -49,23 +49,23 @@ extension ParseClient {
     }
 
     func postStudentLocation(completionHandler: (success: Bool, errorString: String?) -> Void) {
+        //TODO: Should look at passing this rather than using singleton value ?
         let jsonBody: [String: AnyObject] = ParseClient.buildJSONBodyFromUdUser()
         taskForPOSTMethod(Methods.PostStudentLocation,jsonBody: jsonBody)  { (result, error) -> Void in
             if let error = error {
-                completionHandler(success: false, errorString: error.localizedDescription)
+                completionHandler(success: false, errorString: "Student Location POST failed with: \(error.localizedDescription)")
             } else {
-                if let resultsDict = (result as? [String:AnyObject]) where resultsDict.indexForKey(JSONResponseKeys.Results) != nil {
-                    if let studLocArray = resultsDict[JSONResponseKeys.Results] as? [[String:AnyObject]] {
-                        StudentLocationCollection.sharedInstance().populateCollectionFromResults(true, results: studLocArray)
-                        print("Students Loaded: \(StudentLocationCollection.sharedInstance().collection.count)")
+                if let resultsDict = (result as? [String:AnyObject]) {
+                    if let objectid = resultsDict[JSONResponseKeys.ObjectId] as? String{
+                        UdUser.sharedInstance().studentLocation.objectID = objectid
                         completionHandler(success: true, errorString: nil)
                         
                     } else {
-                        completionHandler(success: false, errorString: "Error unpacking student locations")
+                        completionHandler(success: false, errorString: "Error unpacking Student Location POST response")
                     }
                     
                 } else {
-                    completionHandler(success: false, errorString: "No student location details returned")
+                    completionHandler(success: false, errorString: "Student Location Post failed")
                 }
             }
         }

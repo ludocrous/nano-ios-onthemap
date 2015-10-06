@@ -51,6 +51,7 @@ extension UdClient {
                                     if let sessionID = sessionDict[JSONResponseKeys.SessionID] {
                                         self.userID = (userKey as! String)
                                         self.sessionID = (sessionID as! String)
+                                        print(userKey)
                                         print("Successfully found session ID: \(self.sessionID)")
                                         completionHandler(success: true, sessionID: self.sessionID, errorString: nil)
                                     } else {

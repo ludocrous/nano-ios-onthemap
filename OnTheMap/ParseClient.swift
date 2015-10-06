@@ -71,9 +71,10 @@ class ParseClient : NSObject {
         let urlString = Constants.BaseURLSecure + method
         let url = NSURL(string: urlString)!
         let request = NSMutableURLRequest(URL: url)
-        //TODO: Convert the fields to constants as well
+        request.HTTPMethod = "POST"
         request.addValue(Constants.ParseKey, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(Constants.APIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         do {
             request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(jsonBody, options: .PrettyPrinted)
             print("Request Body: \(jsonBody)")

@@ -41,12 +41,7 @@ class TabBarController: UITabBarController {
                 print("Successful refresh of data")
             } else {
                 print("Failed to refresh data")
-                dispatch_async(dispatch_get_main_queue(),{
-                    let myAlert = UIAlertController(title: "Unable to refresh data", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-                    myAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
-                    self.presentViewController(myAlert,animated: true, completion: nil)
-                })
-                
+                displayAlertOnMainThread("Unable to refresh data", message: nil, onViewController: self)
             }
         }
 

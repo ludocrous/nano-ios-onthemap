@@ -23,6 +23,7 @@ class StudentLocationController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var geoLabelView: UIView!
     @IBOutlet weak var urlEntryView: UIView!
     @IBOutlet weak var linkTextField: UITextField!
+    @IBOutlet weak var addressTextField: UITextField!
     @IBOutlet weak var geoEntryView: UIView!
     @IBOutlet weak var mapContainerView: UIView!
     @IBOutlet weak var mapView: MKMapView!
@@ -53,29 +54,101 @@ class StudentLocationController: UIViewController, UITextFieldDelegate {
             mapContainerView.hidden = false
             cancelButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             submitButtonView.backgroundColor = UIColor.clearColor().colorWithAlphaComponent(0.5)
-
+            positionMapViewForUserAnnotation()
         }
     }
+    
+    /*
+    let effect:UIBlurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+    activityBlur = UIVisualEffectView(effect: effect)
+    activityBlur!.frame = self.view.bounds;
+    self.view.addSubview(activityBlur!)
+    
+    activityView  = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+    activityView?.center = self.view.center
+    activityView?.color = UIColor.blackColor()
+    activityView?.startAnimating()
+    self.view.addSubview(activityView!)
+    
+    ParseClient.sharedInstance().loadStudentLocations() { (success, errorString ) in
+    dispatch_async(dispatch_get_main_queue(),{
+    self.activityView?.stopAnimating()
+    self.activityView?.removeFromSuperview()
+    self.activityBlur?.removeFromSuperview()
+    })
+    if success {
+    print("Successful refresh of data")
+    } else {
+    print("Failed to refresh data")
+    displayAlertOnMainThread("Unable to refresh data", message: nil, onViewController: self)
+    }
+    }
+
+*/
+    
+    func positionMapViewForUserAnnotation() {
+        if let userAnnotation:MKAnnotation = UdUser.sharedInstance().studentLocation.asMapAnnotationPointOnly() {
+            mapView.showAnnotations([userAnnotation], animated: true)
+        }
+    }
+    
+    func forwardGeocodeAddress( addressString: String) {
+        //TODO: Show the user you are busy
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(addressString, completionHandler: {(placemarks, error) -> Void in
+            if((error) != nil){
+                displayAlertOnMainThread("Address could not be found", message: "Please re enter address", onViewController: self)
+                UdUser.sharedInstance().resetLocation()
+            } else
+                if let placemark = placemarks?.first {
+                    let coordinates:CLLocationCoordinate2D = placemark.location!.coordinate
+                    print("Lat: \(coordinates.latitude) - Long: \(coordinates.longitude)")
+                    dispatch_async(dispatch_get_main_queue(),{
+                        UdUser.sharedInstance().studentLocation.latitude = coordinates.latitude
+                        UdUser.sharedInstance().studentLocation.longitude = coordinates.longitude
+                        UdUser.sharedInstance().studentLocation.mapString = addressString
+                        self.currentLayoutState = .UrlEntry
+                        self.configureForState(self.currentLayoutState)
+                    })
+                    
+            }
+        })
+        
+    }
+    
     
     @IBAction func cancelButtonTouch(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     @IBAction func findOnMapButtonTouch(sender: AnyObject) {
-        let address = "Oxford Street, London, England"
-        let geocoder = CLGeocoder()
+        if let address = addressTextField.text {
+            forwardGeocodeAddress(address)
+        } else {
+            displayAlert("You must enter a location", message: nil, onViewController: self)
+        }
         
-        geocoder.geocodeAddressString(address, completionHandler: {(placemarks, error) -> Void in
-            if((error) != nil){
-                print("Error", error)
-            } else
-            if let placemark = placemarks?.first {
-                let coordinates:CLLocationCoordinate2D = placemark.location!.coordinate
-                print("Lat: \(coordinates.latitude) - Long: \(coordinates.longitude)")
-            }
-        })    }
+    }
 
     @IBAction func submitButtonTouch(sender: AnyObject) {
+        if let url = linkTextField.text {
+            if ((url as NSString).substringToIndex(7)).lowercaseString == "http://" || ((url as NSString).substringToIndex(8)).lowercaseString == "https://"{
+                UdUser.sharedInstance().studentLocation.mediaURL = url
+                ParseClient.sharedInstance().postStudentLocation() {(success, errorString) in
+                    if success {
+                        //TODO: Pop back to tab view and refresh
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    } else {
+                        displayAlertOnMainThread("Unable to commit location", message: nil, onViewController: self)
+                    }
+                }
+            }
+            else {
+                displayAlert("Invalid URL link", message: "Link must start \"http://\" or \"https://\"", onViewController: self)
+            }
+        } else {
+            displayAlert("You must enter a URL link", message: nil, onViewController: self)
+        }
     }
     //Mark: Keyboard Handling
     

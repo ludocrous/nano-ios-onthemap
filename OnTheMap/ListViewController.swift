@@ -37,9 +37,13 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let url = StudentLocationCollection.sharedInstance().collection[indexPath.row].mediaURL {
-            UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+        if let mediaurl = StudentLocationCollection.sharedInstance().collection[indexPath.row].mediaURL {
+            if let url = NSURL(string: mediaurl) {
+                UIApplication.sharedApplication().openURL(url)
+                return
+            }
         }
+        displayAlert("Unable to open URL", message: nil, onViewController: self)
     }
 
 }

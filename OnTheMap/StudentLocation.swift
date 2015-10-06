@@ -19,6 +19,9 @@ struct StudentLocation {
     var uniqueKey: String?
     var latitude: Double?
     var longitude: Double?
+    //These dates should be converted but since the format lends itself to sorting I will leave as is
+    var createdAt: String?
+    var updatedAt: String?
     var fullName: String {
         get {
             let emptyString = ""
@@ -39,29 +42,27 @@ struct StudentLocation {
         latitude = resultDict[ParseClient.JSONResponseKeys.ResultsLatitude] as? Double
         longitude = resultDict[ParseClient.JSONResponseKeys.ResultsLongitude] as? Double
         //Note: This is subjective and could be applied to all properties
+        createdAt = resultDict[ParseClient.JSONResponseKeys.ResultsCreatedAt] as? String
+        updatedAt = resultDict[ParseClient.JSONResponseKeys.ResultsUpdatedAt] as? String
         if objectID == nil || uniqueKey == nil || latitude == nil || longitude == nil || firstName == nil {
             return nil
         }
     }
     
-    
-    
-    func asMapAnnotation () -> MKPointAnnotation {
-        // Notice that the float values are being used to create CLLocationDegree values.
-        // This is a version of the Double type.
+
+    func asMapAnnotationPointOnly () -> MKPointAnnotation {
         let lat = CLLocationDegrees(latitude!)
         let long = CLLocationDegrees(longitude!)
-        
-        // The lat and long are used to create a CLLocationCoordinates2D instance.
         let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-        
-        
-        // Here we create the annotation and set its coordiate, title, and subtitle properties
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
+        return annotation
+    }
+    
+    func asMapAnnotation () -> MKPointAnnotation {
+        let annotation = self.asMapAnnotationPointOnly()
         annotation.title = "\(firstName!) \(lastName!)"
         annotation.subtitle = mediaURL!
-
         return annotation
     }
     
@@ -84,15 +85,19 @@ class StudentLocationCollection {
     
     func populateCollectionFromResults(clearFirst: Bool, results: [[String: AnyObject]])  -> Void {
         if clearFirst {
-            StudentLocationCollection.sharedInstance().collection.removeAll()
-            StudentLocationCollection.sharedInstance().annotations.removeAll()
+            collection.removeAll()
+            annotations.removeAll()
         }
         for studLocDict in results {
             if let newStudLoc = StudentLocation(resultDict: studLocDict as [String:AnyObject]) {
-                StudentLocationCollection.sharedInstance().collection.append(newStudLoc)
-                StudentLocationCollection.sharedInstance().annotations.append(newStudLoc.asMapAnnotation())
+                collection.append(newStudLoc)
             }
         }
+        collection.sortInPlace {$0.createdAt > $1.createdAt}
+        for loc in collection{
+            annotations.append(loc.asMapAnnotation())
+        }
+        
         print("After load annotation count: \(StudentLocationCollection.sharedInstance().annotations.count)")
     }
 
