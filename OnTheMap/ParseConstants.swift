@@ -10,6 +10,10 @@ import Foundation
 
 extension ParseClient {
     
+    enum PaError : Int {
+        case Unknown = 50001
+    }
+    
     struct Constants {
         static let ParseKey: String = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
         static let APIKey: String = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
@@ -24,10 +28,6 @@ extension ParseClient {
     
     struct URLKeys {
         static let UserID = "objectid"
-    }
-    //TODO: Possibly unnecessary
-    struct ParameterKeys {
-        
     }
     
     struct JSONBodyKeys {

@@ -18,5 +18,16 @@ func displayAlertOnMainThread(title: String, message: String?, onViewController:
     dispatch_async(dispatch_get_main_queue(),{
         displayAlert( title, message: message, onViewController: onViewController)
     })
-    
+}
+
+func dbg(printString : String) {
+    if AppDelegate.DEBUG_PRINT {
+        print("Dbg:\(printString)")
+    }
+}
+
+func err(printString : String) {
+    if AppDelegate.DEBUG_PRINT {
+        print("Dbg:\(printString)")
+    }
 }

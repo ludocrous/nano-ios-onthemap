@@ -10,15 +10,21 @@ import UIKit
 import MapKit
 
 class StudentLocationController: UIViewController, UITextFieldDelegate {
-    
+    // This enum denotes the two states under which this view can operate
     enum SLLayoutState {
         case GeoEntry
         case UrlEntry
     }
-    
-    let oceanColour = UIColor(red: 0.0, green: 0.25, blue: 0.5, alpha: 1.0)
+    // var to contain the current desired state
     var currentLayoutState: SLLayoutState = .GeoEntry
 
+    //MARK Constants
+    let oceanColour = UIColor(red: 0.0, green: 0.25, blue: 0.5, alpha: 1.0)
+    let addressTextPrompt = "Enter Your Location"
+    let linkTextPrompt = "Enter a link to share"
+    
+    var activityView: UIActivityIndicatorView?
+    
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var geoLabelView: UIView!
     @IBOutlet weak var urlEntryView: UIView!
@@ -33,76 +39,74 @@ class StudentLocationController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
         configureForState(currentLayoutState)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        currentLayoutState = .GeoEntry
     }
     
     func configureForState(state: SLLayoutState) {
         switch state {
         case .GeoEntry:
-            print("Engaging Geo Entry")
+            // Settings for the initial address entry state of the view
             geoLabelView.hidden = false
             geoEntryView.hidden = false
             urlEntryView.hidden = true
             mapContainerView.hidden = true
+            addressTextField.text = addressTextPrompt
+            addressTextField.placeholder = addressTextPrompt
             cancelButton.setTitleColor(oceanColour, forState: .Normal)
             
         case .UrlEntry:
-            print("Engaging Url Entry")
+            // Settings for the Url link entry once address has been forward geocoded and displayed.
             geoLabelView.hidden = true
             geoEntryView.hidden = true
             urlEntryView.hidden = false
             mapContainerView.hidden = false
+            linkTextField.text = linkTextPrompt
+            linkTextField.placeholder = linkTextPrompt
             cancelButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             submitButtonView.backgroundColor = UIColor.clearColor().colorWithAlphaComponent(0.5)
             positionMapViewForUserAnnotation()
         }
     }
     
-    /*
-    let effect:UIBlurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
-    activityBlur = UIVisualEffectView(effect: effect)
-    activityBlur!.frame = self.view.bounds;
-    self.view.addSubview(activityBlur!)
-    
-    activityView  = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
-    activityView?.center = self.view.center
-    activityView?.color = UIColor.blackColor()
-    activityView?.startAnimating()
-    self.view.addSubview(activityView!)
-    
-    ParseClient.sharedInstance().loadStudentLocations() { (success, errorString ) in
-    dispatch_async(dispatch_get_main_queue(),{
-    self.activityView?.stopAnimating()
-    self.activityView?.removeFromSuperview()
-    self.activityBlur?.removeFromSuperview()
-    })
-    if success {
-    print("Successful refresh of data")
-    } else {
-    print("Failed to refresh data")
-    displayAlertOnMainThread("Unable to refresh data", message: nil, onViewController: self)
-    }
-    }
-
-*/
-    
     func positionMapViewForUserAnnotation() {
+        // Retrieve student location from singleton and build an annotation
         if let userAnnotation:MKAnnotation = UdUser.sharedInstance().studentLocation.asMapAnnotationPointOnly() {
+            //Position map to show gecoded address
             mapView.showAnnotations([userAnnotation], animated: true)
         }
     }
     
     func forwardGeocodeAddress( addressString: String) {
-        //TODO: Show the user you are busy
+        // Bring on a activity view to show we are busy
+        activityView  = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+        activityView?.center = self.view.center
+        activityView?.color = UIColor.whiteColor()
+        activityView?.startAnimating()
+        self.view.addSubview(activityView!)
+        
+        // Start the geocode
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(addressString, completionHandler: {(placemarks, error) -> Void in
+            // Regardless of result - force the dismisal of the activity view
+            dispatch_async(dispatch_get_main_queue(),{
+                self.activityView?.stopAnimating()
+                self.activityView?.removeFromSuperview()
+            })
+
             if((error) != nil){
-                displayAlertOnMainThread("Address could not be found", message: "Please re enter address", onViewController: self)
+                // Show alert to user
+                displayAlertOnMainThread("Address could not be found", message: "Please enter another address", onViewController: self)
                 UdUser.sharedInstance().resetLocation()
             } else
+                // Create a single annotation by loading
                 if let placemark = placemarks?.first {
                     let coordinates:CLLocationCoordinate2D = placemark.location!.coordinate
-                    print("Lat: \(coordinates.latitude) - Long: \(coordinates.longitude)")
+                    dbg("Lat: \(coordinates.latitude) - Long: \(coordinates.longitude)")
                     dispatch_async(dispatch_get_main_queue(),{
                         UdUser.sharedInstance().studentLocation.latitude = coordinates.latitude
                         UdUser.sharedInstance().studentLocation.longitude = coordinates.longitude
@@ -118,11 +122,13 @@ class StudentLocationController: UIViewController, UITextFieldDelegate {
     
     
     @IBAction func cancelButtonTouch(sender: AnyObject) {
+        // Close the view
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     @IBAction func findOnMapButtonTouch(sender: AnyObject) {
-        if let address = addressTextField.text {
+        // Start the geocoding process
+        if let address = addressTextField.text where address != addressTextPrompt && address != "" {
             forwardGeocodeAddress(address)
         } else {
             displayAlert("You must enter a location", message: nil, onViewController: self)
@@ -131,13 +137,21 @@ class StudentLocationController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func submitButtonTouch(sender: AnyObject) {
-        if let url = linkTextField.text {
+        // Commit the position and url to the database
+        if let url = linkTextField.text where url != linkTextPrompt && url != "" {
+            // Check url is reasonably formed
             if ((url as NSString).substringToIndex(7)).lowercaseString == "http://" || ((url as NSString).substringToIndex(8)).lowercaseString == "https://"{
                 UdUser.sharedInstance().studentLocation.mediaURL = url
+                // if so call POST
                 ParseClient.sharedInstance().postStudentLocation() {(success, errorString) in
                     if success {
-                        //TODO: Pop back to tab view and refresh
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                        //Reload the data from Parse
+                        ParseClient.sharedInstance().loadStudentLocations() { (success, errorString ) in
+                            //Irrespective of success - return to tab view
+                            dispatch_async(dispatch_get_main_queue(),{
+                                self.dismissViewControllerAnimated(true, completion: nil)
+                            })
+                        }
                     } else {
                         displayAlertOnMainThread("Unable to commit location", message: nil, onViewController: self)
                     }
@@ -160,14 +174,5 @@ class StudentLocationController: UIViewController, UITextFieldDelegate {
         textField.resignFirstResponder()
         return false
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

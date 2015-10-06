@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-
+// Class to handle Student Location Information
 struct StudentLocation {
     var firstName: String?
     var lastName: String?
@@ -19,9 +19,10 @@ struct StudentLocation {
     var uniqueKey: String?
     var latitude: Double?
     var longitude: Double?
-    //These dates should be converted but since the format lends itself to sorting I will leave as is
+    //Note: These dates should be converted but since the format lends itself to sorting I will leave as is
     var createdAt: String?
     var updatedAt: String?
+    // Calced property to show Full Name
     var fullName: String {
         get {
             let emptyString = ""
@@ -33,6 +34,7 @@ struct StudentLocation {
     }
     
     init?(resultDict: [String:AnyObject]) {
+        //Initialise properties from JSON results dictionary
         objectID = resultDict[ParseClient.JSONResponseKeys.ResultsObjectID] as? String
         uniqueKey = resultDict[ParseClient.JSONResponseKeys.ResultsUniqueKey] as? String
         firstName = resultDict[ParseClient.JSONResponseKeys.ResultsFirstName] as? String
@@ -41,15 +43,15 @@ struct StudentLocation {
         mediaURL = resultDict[ParseClient.JSONResponseKeys.ResultsMediaURL] as? String
         latitude = resultDict[ParseClient.JSONResponseKeys.ResultsLatitude] as? Double
         longitude = resultDict[ParseClient.JSONResponseKeys.ResultsLongitude] as? Double
-        //Note: This is subjective and could be applied to all properties
         createdAt = resultDict[ParseClient.JSONResponseKeys.ResultsCreatedAt] as? String
         updatedAt = resultDict[ParseClient.JSONResponseKeys.ResultsUpdatedAt] as? String
+        //Note: This is subjective and could be applied to all properties
         if objectID == nil || uniqueKey == nil || latitude == nil || longitude == nil || firstName == nil {
             return nil
         }
     }
     
-
+// Convert location into a Map Annotation with coordinate point only
     func asMapAnnotationPointOnly () -> MKPointAnnotation {
         let lat = CLLocationDegrees(latitude!)
         let long = CLLocationDegrees(longitude!)
@@ -58,7 +60,8 @@ struct StudentLocation {
         annotation.coordinate = coordinate
         return annotation
     }
-    
+
+// Convert location into a Map Annotation with fullname and url for map pins
     func asMapAnnotation () -> MKPointAnnotation {
         let annotation = self.asMapAnnotationPointOnly()
         annotation.title = "\(firstName!) \(lastName!)"
@@ -69,9 +72,8 @@ struct StudentLocation {
 }
 
 
-
+// Class (array) to hold Student locations and their map annotations
 class StudentLocationCollection {
-    //TODO: These class constructs need more work, with read-only properties, etc.
     var collection: [StudentLocation] = []
     var annotations: [MKPointAnnotation] = []
     
@@ -97,74 +99,6 @@ class StudentLocationCollection {
         for loc in collection{
             annotations.append(loc.asMapAnnotation())
         }
-        
-        print("After load annotation count: \(StudentLocationCollection.sharedInstance().annotations.count)")
     }
 
-    //TODO: Remove this code
-    func selfPopulateForDemo() {
-        populateCollectionFromResults(true, results: self.hardCodedLocationData())
-    }
-    
-    //TODO: Remove this code
-    func hardCodedLocationData() -> [[String : AnyObject]] {
-        return  [
-            [
-                "createdAt" : "2015-02-24T22:27:14.456Z",
-                "firstName" : "Jessica",
-                "lastName" : "Uelmen",
-                "latitude" : 28.1461248,
-                "longitude" : -82.75676799999999,
-                "mapString" : "Tarpon Springs, FL",
-                "mediaURL" : "www.linkedin.com/in/jessicauelmen/en",
-                "objectId" : "kj18GEaWD8",
-                "uniqueKey" : "872458750",
-                "updatedAt" : "2015-03-09T22:07:09.593Z"
-            ], [
-                "createdAt" : "2015-02-24T22:35:30.639Z",
-                "firstName" : "Gabrielle",
-                "lastName" : "Miller-Messner",
-                "latitude" : 35.1740471,
-                "longitude" : -79.3922539,
-                "mapString" : "Southern Pines, NC",
-                "mediaURL" : "http://www.linkedin.com/pub/gabrielle-miller-messner/11/557/60/en",
-                "objectId" : "8ZEuHF5uX8",
-                "uniqueKey" : "2256298598",
-                "updatedAt" : "2015-03-11T03:23:49.582Z"
-            ], [
-                "createdAt" : "2015-02-24T22:30:54.442Z",
-                "firstName" : "Jason",
-                "lastName" : "Schatz",
-                "latitude" : 37.7617,
-                "longitude" : -122.4216,
-                "mapString" : "18th and Valencia, San Francisco, CA",
-                "mediaURL" : "http://en.wikipedia.org/wiki/Swift_%28programming_language%29",
-                "objectId" : "hiz0vOTmrL",
-                "uniqueKey" : "2362758535",
-                "updatedAt" : "2015-03-10T17:20:31.828Z"
-            ], [
-                "createdAt" : "2015-03-11T02:48:18.321Z",
-                "firstName" : "Jarrod",
-                "lastName" : "Parkes",
-                "latitude" : 34.73037,
-                "longitude" : -86.58611000000001,
-                "mapString" : "Huntsville, Alabama",
-                "mediaURL" : "https://linkedin.com/in/jarrodparkes",
-                "objectId" : "CDHfAy8sdp",
-                "uniqueKey" : "996618664",
-                "updatedAt" : "2015-03-13T03:37:58.389Z"
-            ], [
-                "createdAt" : "2015-03-11T02:48:18.321Z",
-                "firstName" : "Joe",
-                "lastName" : "Soap",
-                "latitude" : 51.53037,
-                "longitude" : -0.58611000000001,
-                "mapString" : "London, England",
-                "mediaURL" : "http://www.gamespot.com",
-                "objectId" : "CDHfAy8sdk",
-                "uniqueKey" : "996618665",
-                "updatedAt" : "2015-03-13T03:37:58.389Z"
-            ]
-        ]
-    }
 }

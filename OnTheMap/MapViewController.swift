@@ -17,15 +17,26 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        refreshView()
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        refreshView()
+    }
+    
+    // USe this function to allow refresh from tabbarcontroller
+    func refreshView() {
         populateStudentLocations()
     }
 
-    
-
     func populateStudentLocations(){
         // When the array is complete, we add the annotations to the map.
-        print("Annotations Loaded: \(StudentLocationCollection.sharedInstance().annotations.count)")
-        self.mapView.addAnnotations(StudentLocationCollection.sharedInstance().annotations)
+
+        // First remove all existing annotations
+        mapView.removeAnnotations(mapView.annotations)
+        dbg("Annotations Loaded: \(StudentLocationCollection.sharedInstance().annotations.count)")
+        // Then add new annotations
+        mapView.addAnnotations(StudentLocationCollection.sharedInstance().annotations)
         
     }
     
@@ -38,7 +49,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = true
-//            pinView!.pinColor = .Red
             pinView!.pinTintColor = UIColor.redColor()
             pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
         }

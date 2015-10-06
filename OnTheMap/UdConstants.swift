@@ -9,6 +9,16 @@
 import Foundation
 
 extension UdClient {
+    //Using arbitrary codes in the absence of a formalised Error Handling Structure
+    enum UdError: Int {
+        case Unknown = 10001
+        case BadCredentials = 10002
+        case Unauthorised = 10003
+    }
+    
+    
+//MARK: Constants, Methods and Keys for Udacity JSON API
+    
     
     struct Constants {
         static let FacebookAPIKey: String = "365362206864879"
@@ -25,20 +35,16 @@ extension UdClient {
     struct URLKeys {
         static let UserID = "id"
     }
-    //TODO: Possibly unnecessary
-    struct ParameterKeys {
-        
-    }
-        
+
+//MARK: Body Keys for Udacity JSON API
+    
     struct JSONBodyKeys {
         static let Username = "username"
         static let Password = "password"
     }
     
+//MARK: Response Keys for Udacity JSON API
     struct JSONResponseKeys {
-        //MARK: Session responses
-        
-        //MARK: For account section
         static let Account = "account"
         static let AccountRegistered = "registered"
         static let AccountKey = "key"
@@ -47,7 +53,6 @@ extension UdClient {
         static let SessionID = "id"
         static let SessionExpiration = "expiration"
         
-        //MARK: For user information 
         
         static let User = "user"
         static let UserFirstName = "first_name"

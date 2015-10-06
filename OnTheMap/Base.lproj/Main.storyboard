@@ -63,7 +63,7 @@
         <!--List-->
         <scene sceneID="wg7-f3-ORb">
             <objects>
-                <viewController id="8rJ-Kc-sve" customClass="ListViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="8rJ-Kc-sve" customClass="ListViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="L7p-HK-0SC"/>
                         <viewControllerLayoutGuide type="bottom" id="Djb-ko-YwX"/>
@@ -77,7 +77,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="mhT-Yr-LXZ" detailTextLabel="NuF-xO-ZyM" imageView="zEk-7j-Ld2" style="IBUITableViewCellStyleSubtitle" id="4ru-66-0oG">
-                                        <rect key="frame" x="0.0" y="92" width="560" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="560" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4ru-66-0oG" id="6NA-Jr-enk">
                                             <rect key="frame" x="0.0" y="0.0" width="560" height="43"/>
@@ -121,6 +121,9 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="List" image="list" id="RST-JB-EIe"/>
                     <navigationItem key="navigationItem" id="8zw-qP-glL"/>
+                    <connections>
+                        <outlet property="tableView" destination="fjX-Fo-vLz" id="c9u-ND-Tb6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>
@@ -261,6 +264,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
+                        <outlet property="refreshButton" destination="XQf-5H-l8P" id="ycD-D9-bCb"/>
                         <segue destination="9pv-A4-QxB" kind="relationship" relationship="viewControllers" id="R6A-SY-vOF"/>
                         <segue destination="8rJ-Kc-sve" kind="relationship" relationship="viewControllers" id="5DZ-5I-juz"/>
                     </connections>
@@ -382,7 +386,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2pk-5u-kzf" userLabel="GeoEntry">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                                         <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" text="Enter you location here" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lGt-3e-NWe">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="Enter your location here" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lGt-3e-NWe">
                                                 <rect key="frame" x="0.0" y="17" width="600" height="283"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>

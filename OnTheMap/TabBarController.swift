@@ -13,13 +13,29 @@ class TabBarController: UITabBarController {
     var activityView: UIActivityIndicatorView?
     var activityBlur: UIVisualEffectView?
 
+    @IBOutlet weak var refreshButton: UIBarButtonItem!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
+    
+    
+    func refreshViews() {
+        switch self.selectedIndex {
+        case 0 : // The map view
+            (self.selectedViewController as! MapViewController).refreshView()
+        case 1: // The list view
+            (self.selectedViewController as! ListViewController).refreshView()
+        default:
+            break
+        }
+      
+    }
 
     @IBAction func refreshDataTouch(sender: AnyObject) {
+        refreshButton.enabled = false
+        
         let effect:UIBlurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
         activityBlur = UIVisualEffectView(effect: effect)
         activityBlur!.frame = self.view.bounds;
@@ -36,11 +52,16 @@ class TabBarController: UITabBarController {
                 self.activityView?.stopAnimating()
                 self.activityView?.removeFromSuperview()
                 self.activityBlur?.removeFromSuperview()
+                self.refreshButton.enabled = true
             })
             if success {
-                print("Successful refresh of data")
+                dbg("Successful refresh of data")
+                dispatch_async(dispatch_get_main_queue(),{
+                    self.refreshViews()
+                })
+
             } else {
-                print("Failed to refresh data")
+                err("Failed to refresh data")
                 displayAlertOnMainThread("Unable to refresh data", message: nil, onViewController: self)
             }
         }

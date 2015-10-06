@@ -32,35 +32,24 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     }
     
     @IBAction func loginButtonTouch(sender: UIButton) {
-        //TODO: Remove this code
-        if false {
-            StudentLocationCollection.sharedInstance().selfPopulateForDemo()
-            moveToMainNavController()
-            return
-        }
-    
         self.view.endEditing(false)
-        if let userName = emailTextField.text {
-            if let password = passwordTextField.text {
+        if let userName = emailTextField.text where userName != "" {
+            if let password = passwordTextField.text where password != "" {
                 UdClient.sharedInstance().authenticateWithUsername(userName, password: password) {
                     (success, errorString) in
                     if success {
                         self.completeLogin()
                     } else {
-                        //TODO: Show user error
-                        displayAlertOnMainThread("Cannot log in", message: nil, onViewController: self)
-//                        self.showErrorAlert("Cannot login in")
-                        print("Error logging in: \(errorString)")
+                        displayAlertOnMainThread("Login Failed", message: errorString, onViewController: self)
+                        err("Error logging in: \(errorString)")
                     }
                 }
                 
             } else {
-                //TODO: Show user error
-                //Error no password
+                displayAlert("Enter a password", message: nil, onViewController: self)
             }
         } else {
-            //TODO: Show user error
-            // Error - no user name entered
+            displayAlert("Enter a user name", message: nil, onViewController: self)
         }
     }
     
@@ -73,12 +62,12 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     func completeLogin() {
         ParseClient.sharedInstance().loadStudentLocations() { (success, errorstring) in
             if success {
-                print ("Student locations loaded - Count: \(StudentLocationCollection.sharedInstance().collection.count)")
+                dbg ("Student locations loaded - Count: \(StudentLocationCollection.sharedInstance().collection.count)")
                 dispatch_async(dispatch_get_main_queue(),{
                     self.moveToMainNavController()
                 })
             } else {
-                print ("Failed to load student locations")
+                err ("Failed to load student locations")
             }
         }
     }

@@ -13,34 +13,45 @@ import UIKit
 extension UdClient {
     
     // Control the request for Udacity Login
+
+    //MARK: Public functions
     func authenticateWithUsername(username: String, password: String, completionHandler: (success: Bool, errorString: String?) -> Void) {
         
         self.postSessionID(username, password: password) { (success, sessionID, errorString) in
             if success {
                 self.getUserData() {(success, result, errorString) in
                     if success {
-                        print("Found details for: \(result?.key) First: \(result?.firstName) Last: \(result?.lastName)")
+                        dbg("Found details for: \(result?.key) First: \(result?.firstName) Last: \(result?.lastName)")
                         completionHandler(success: true, errorString: nil)
                     } else {
-                        //What now
+                        completionHandler(success: false,  errorString: errorString)
                     }
                 }
             } else {
                 completionHandler(success: false,  errorString: errorString)
             }
         }
-        
     }
-
+    
+    //MARK: Private functions
+    // Retrieve the session ID from Udacity using the POST method
     func postSessionID(username: String, password: String, completionHandler: (success: Bool, sessionID: String?, errorString: String?) -> Void)  {
         
         let userPassDict: [String: AnyObject] = [JSONBodyKeys.Username:username, JSONBodyKeys.Password:password]
         let jsonBody: [String: AnyObject] = ["udacity" : userPassDict]
-        taskForPOSTMethod(Methods.CreateSession, /*parameters: nil,*/ jsonBody: jsonBody) { JSONResult, error in
+        taskForPOSTMethod(Methods.CreateSession, jsonBody: jsonBody) { JSONResult, error in
             
-            /* 3. Send the desired value(s) to completion handler */
             if let error = error {
-                completionHandler(success: false, sessionID: nil, errorString: error.localizedDescription)
+                switch error.code {
+                case -1009:
+                    completionHandler(success: false, sessionID: nil, errorString: "Internet connection not available")
+                case -1001:
+                    completionHandler(success: false, sessionID: nil, errorString: "Network connection timed out")
+                case UdError.Unauthorised.rawValue:
+                    completionHandler(success: false, sessionID: nil, errorString: "Invalid Username/Password")
+                default:
+                    completionHandler(success: false, sessionID: nil, errorString: "Unknown Error")
+                }
             } else {
                 if let accountDict = (JSONResult as! [String:AnyObject])[JSONResponseKeys.Account] {
                     if let isRegistered: Bool = accountDict[JSONResponseKeys.AccountRegistered] as? Bool {
@@ -51,71 +62,66 @@ extension UdClient {
                                     if let sessionID = sessionDict[JSONResponseKeys.SessionID] {
                                         self.userID = (userKey as! String)
                                         self.sessionID = (sessionID as! String)
-                                        print(userKey)
-                                        print("Successfully found session ID: \(self.sessionID)")
+                                        dbg("Successfully found session ID: \(self.sessionID)")
                                         completionHandler(success: true, sessionID: self.sessionID, errorString: nil)
                                     } else {
                                         // cannot get session ID
                                         let errorMsg = "Cannot locate ID in session results"
-                                        print(errorMsg)
+                                        err(errorMsg)
                                         completionHandler(success: false, sessionID: nil, errorString: errorMsg)
                                     }
                                 } else {
                                     // No session Dict
                                     let errorMsg = "Cannot locate session information in results"
-                                    print(errorMsg)
+                                    err(errorMsg)
                                     completionHandler(success: false, sessionID: nil, errorString: errorMsg)
                                 }
                             } else {
                                 // No key ??
                                 let errorMsg = "Cannot locate key in user results"
-                                print(errorMsg)
+                                err(errorMsg)
                                 completionHandler(success: false, sessionID: nil, errorString: errorMsg)
                             }
                         } else {
                             // Error because user is not registered
                             let errorMsg = "User is not registered"
-                            print(errorMsg)
+                            err(errorMsg)
                             completionHandler(success: false, sessionID: nil, errorString: errorMsg)
                         }
                     } else {
                         //Error dictionary has no account entry
                         let errorMsg = "Cannot locate user registration information in account results"
-                        print(errorMsg)
+                        err(errorMsg)
                         completionHandler(success: false, sessionID: nil, errorString: errorMsg)
                     }
                     
                 } else {
                     //Else no account entry in response
                     let errorMsg = "Cannot locate account information in results"
-                    print(errorMsg)
+                    err(errorMsg)
                     completionHandler(success: false, sessionID: nil, errorString: errorMsg)
                 }
             }
         }
     }
-/*
-                    completionHandler(result: results, error: nil)
-                } else {
-                    completionHandler(result: nil, error: NSError(domain: "postToFavoritesList parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse postToFavoritesList"]))
-                }
-            }
-*/
     
-    
-    
+    // Retrieve the Udacity information for the user.
     func getUserData(completionHandler: (success: Bool, result: UdUser?, errorString: String?) -> Void) {
         var mutableMethod : String = Methods.GetPublicUserData
         mutableMethod = UdClient.subtituteKeyInMethod(mutableMethod, key: UdClient.URLKeys.UserID, value: String(UdClient.sharedInstance().userID!))!
         taskForGETMethod(mutableMethod)  { (result, error) -> Void in
             if let error = error {
+                err("Error in getUserData:\(error.localizedDescription)")
                 completionHandler(success: false, result: nil, errorString: error.localizedDescription)
             } else {
                 if let userDict = (result as? [String:AnyObject]) where userDict.indexForKey("user") != nil {
                     let userDetail = userDict[JSONResponseKeys.User] as! [String:AnyObject]
                     UdUser.sharedInstance().setPropertiesFromResults(userDetail)
+                    dbg("Udacity User Data loaded with unique key: \(UdUser.sharedInstance().key)")
                     completionHandler(success: true, result: UdUser.sharedInstance(), errorString: nil)
+                    
                 } else {
+                    err("Udacity User Data load failed: No user details returned")
                     completionHandler(success: false, result: nil, errorString: "No user details returned")
                 }
             }
@@ -123,17 +129,18 @@ extension UdClient {
 
     }
 
-    func deleteSessionID(completionHandler: (success: Bool, errorString: String?) -> Void) {
+    // Use delete method to "delete" the session and force Udacity to delete the session ID server side
+/*    func deleteSessionID(completionHandler: (success: Bool, errorString: String?) -> Void) {
         taskForDELETEMethod()  { (result, error) -> Void in
             if let error = error {
                 completionHandler(success: false, errorString: error.localizedDescription)
             } else {
                 if let sessionDict = (result as? [String:AnyObject]) where sessionDict.indexForKey("session") != nil {
                     if let sessionID = (sessionDict[JSONResponseKeys.Session] as! [String:AnyObject])["id"] {
-                        print("Deleted Session Key: \(sessionID)")
+                        dbg("Deleted Session Key: \(sessionID)")
                         completionHandler(success: true, errorString: nil)
                     } else {
-                        print("Session dict contains no key id")
+                        err("Session dict contains no key id")
                         completionHandler(success: false, errorString: "Session dict contains no key id")
                     }
                 } else {
@@ -143,9 +150,9 @@ extension UdClient {
         }
         
     }
+  */
     
-    
-    //Mark: Udacity Website sign up
+    //MARK: Udacity Website sign up
     func loadUdacitySignUpPage () {
         UIApplication.sharedApplication().openURL(NSURL(string: "https://www.udacity.com/account/auth#!/signup")!)
     }
