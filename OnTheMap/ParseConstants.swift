@@ -30,6 +30,10 @@ extension ParseClient {
         static let UserID = "objectid"
     }
     
+    struct ParameterKeys {
+        static let SortOrder = "order"
+    }
+    
     struct JSONBodyKeys {
         static let UniqueKey = "uniqueKey"
         static let FirstName = "firstName"

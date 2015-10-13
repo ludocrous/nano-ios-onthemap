@@ -26,7 +26,8 @@ extension ParseClient {
     }
 
     func getStudentLocations(completionHandler: (success: Bool, errorString: String?) -> Void) {
-        taskForGETMethod(Methods.GetStudentLocations)  { (result, error) -> Void in
+        let parameters = [ParameterKeys.SortOrder: "-updatedAt"]
+        taskForGETMethod(Methods.GetStudentLocations, parameters: parameters)  { (result, error) -> Void in
             if let error = error {
                 completionHandler(success: false, errorString: error.localizedDescription)
             } else {

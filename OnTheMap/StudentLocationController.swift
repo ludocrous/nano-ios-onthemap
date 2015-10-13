@@ -26,6 +26,7 @@ class StudentLocationController: UIViewController, UITextFieldDelegate {
     var activityView: UIActivityIndicatorView?
     
     @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var browseButton: UIButton!
     @IBOutlet weak var geoLabelView: UIView!
     @IBOutlet weak var urlEntryView: UIView!
     @IBOutlet weak var linkTextField: UITextField!
@@ -79,6 +80,9 @@ class StudentLocationController: UIViewController, UITextFieldDelegate {
             //Position map to show gecoded address
             mapView.showAnnotations([userAnnotation], animated: true)
         }
+    }
+    
+    @IBAction func browseURL(sender: UIButton) {
     }
     
     func forwardGeocodeAddress( addressString: String) {

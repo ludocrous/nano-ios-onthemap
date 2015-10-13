@@ -40,7 +40,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                     if success {
                         self.completeLogin()
                     } else {
-                        displayAlertOnMainThread("Login Failed", message: errorString, onViewController: self)
+                        self.shakeLoginFields()
                         err("Error logging in: \(errorString)")
                     }
                 }
@@ -49,8 +49,27 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                 displayAlert("Enter a password", message: nil, onViewController: self)
             }
         } else {
-            displayAlert("Enter a user name", message: nil, onViewController: self)
+            displayAlert("Enter a username/email", message: nil, onViewController: self)
         }
+    }
+    
+    func createAnimationForTextField(textField: UITextField) -> CABasicAnimation {
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.07
+        animation.repeatCount = 4
+        animation.autoreverses = true
+        animation.fromValue = NSValue(CGPoint: CGPointMake(textField.center.x - 10, textField.center.y))
+        animation.toValue = NSValue(CGPoint: CGPointMake(textField.center.x + 10, textField.center.y))
+        return animation
+    }
+    
+    func shakeLoginFields() {
+        dispatch_async(dispatch_get_main_queue(),{
+            var animation = self.createAnimationForTextField(self.emailTextField)
+            self.emailTextField.layer.addAnimation(animation, forKey: "position")
+            animation = self.createAnimationForTextField(self.passwordTextField)
+            self.passwordTextField.layer.addAnimation(animation, forKey: "position")
+        })
     }
     
     func moveToMainNavController() {
@@ -67,6 +86,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                     self.moveToMainNavController()
                 })
             } else {
+                displayAlertOnMainThread("Login Failed", message: "Unable to load student data", onViewController: self)
                 err ("Failed to load student locations")
             }
         }

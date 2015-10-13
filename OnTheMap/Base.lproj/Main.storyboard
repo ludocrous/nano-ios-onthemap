@@ -87,14 +87,14 @@
                                                     <rect key="frame" x="62" y="5" width="32" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NuF-xO-ZyM">
                                                     <rect key="frame" x="62" y="25" width="41" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="pin" id="zEk-7j-Ld2">
@@ -288,28 +288,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NQY-V9-WC6" userLabel="TopView">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XLd-Jf-TAj" userLabel="UrlEntry">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
-                                        <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter a link to share here " textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xKN-rR-Hrw">
-                                                <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>
-                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="j4n-U7-XZd" id="ey1-rF-4Ov"/>
-                                                </connections>
-                                            </textField>
-                                        </subviews>
-                                        <color key="backgroundColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="xKN-rR-Hrw" secondAttribute="trailing" id="IjJ-e6-1i3"/>
-                                            <constraint firstItem="xKN-rR-Hrw" firstAttribute="leading" secondItem="XLd-Jf-TAj" secondAttribute="leading" id="ShH-wg-Bms"/>
-                                            <constraint firstItem="xKN-rR-Hrw" firstAttribute="top" secondItem="XLd-Jf-TAj" secondAttribute="top" id="gR4-nZ-mGA"/>
-                                            <constraint firstAttribute="bottom" secondItem="xKN-rR-Hrw" secondAttribute="bottom" id="jwf-Cd-aNl"/>
-                                        </constraints>
-                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G1R-yG-kKc" userLabel="GeoLabel">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
                                         <subviews>
@@ -354,6 +332,36 @@
                                         <constraints>
                                             <constraint firstItem="cOn-GP-EzJ" firstAttribute="centerY" secondItem="G1R-yG-kKc" secondAttribute="centerY" id="0ZR-ts-NTB"/>
                                             <constraint firstItem="cOn-GP-EzJ" firstAttribute="centerX" secondItem="G1R-yG-kKc" secondAttribute="centerX" id="bNs-Gy-MaV"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XLd-Jf-TAj" userLabel="UrlEntry">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter a link to share here " textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xKN-rR-Hrw">
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="162"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="j4n-U7-XZd" id="ey1-rF-4Ov"/>
+                                                </connections>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CRN-VU-Mxp">
+                                                <rect key="frame" x="8" y="162" width="584" height="30"/>
+                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <state key="normal" title="Test URL"/>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="CRN-VU-Mxp" secondAttribute="trailing" constant="8" id="1xW-qt-dJD"/>
+                                            <constraint firstItem="CRN-VU-Mxp" firstAttribute="leading" secondItem="XLd-Jf-TAj" secondAttribute="leading" constant="8" id="8jJ-1B-uKG"/>
+                                            <constraint firstAttribute="trailing" secondItem="xKN-rR-Hrw" secondAttribute="trailing" id="IjJ-e6-1i3"/>
+                                            <constraint firstItem="xKN-rR-Hrw" firstAttribute="leading" secondItem="XLd-Jf-TAj" secondAttribute="leading" id="ShH-wg-Bms"/>
+                                            <constraint firstAttribute="bottom" secondItem="CRN-VU-Mxp" secondAttribute="bottom" constant="8" id="dAF-JH-5Rr"/>
+                                            <constraint firstItem="xKN-rR-Hrw" firstAttribute="top" secondItem="XLd-Jf-TAj" secondAttribute="top" id="gR4-nZ-mGA"/>
+                                            <constraint firstItem="CRN-VU-Mxp" firstAttribute="top" secondItem="xKN-rR-Hrw" secondAttribute="bottom" id="jgY-Cr-4zc"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -432,9 +440,6 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="30q-Sw-D3a" userLabel="MapContainer">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                                         <subviews>
-                                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spA-uN-wOn" userLabel="MapView">
-                                                <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
-                                            </mapView>
                                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ksi-ye-V2Y" userLabel="SubmitButtonView">
                                                 <rect key="frame" x="0.0" y="300" width="600" height="100"/>
                                                 <subviews>
@@ -458,6 +463,9 @@
                                                     <constraint firstAttribute="height" constant="100" id="mC5-QP-zup"/>
                                                 </constraints>
                                             </view>
+                                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spA-uN-wOn" userLabel="MapView">
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
+                                            </mapView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
