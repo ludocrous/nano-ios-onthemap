@@ -85,7 +85,7 @@ class StudentLocationController: UIViewController, UITextFieldDelegate {
     @IBAction func browseURL(sender: UIButton) {
         if let url = linkTextField.text where url != linkTextPrompt && url != "" {
             // Check url is reasonably formed
-            if ((url as NSString).substringToIndex(7)).lowercaseString == "http://" || ((url as NSString).substringToIndex(8)).lowercaseString == "https://"{
+            if url.characters.count > 7 && (((url as NSString).substringToIndex(7)).lowercaseString == "http://" || ((url as NSString).substringToIndex(8)).lowercaseString == "https://"){
                 UIApplication.sharedApplication().openURL(NSURL(string: url)!)
             }
             else {
