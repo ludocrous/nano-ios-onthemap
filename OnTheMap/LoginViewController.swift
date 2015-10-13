@@ -40,10 +40,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         if let userName = emailTextField.text where userName != "" {
             if let password = passwordTextField.text where password != "" {
 
-//                let effect:UIBlurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
-//                activityBlur = UIVisualEffectView(effect: effect)
-//                activityBlur!.frame = self.view.bounds;
-//                self.view.addSubview(activityBlur!)
 
                 activityView  = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
                 activityView?.center = self.view.center
@@ -55,7 +51,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                     (success, errorString) in
                     dispatch_async(dispatch_get_main_queue(),{
                         self.activityView?.stopAnimating()
-//                        self.activityBlur?.removeFromSuperview()
                         self.activityView?.removeFromSuperview()
                     })
                     
@@ -63,6 +58,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                         self.completeLogin()
                     } else {
                         self.shakeLoginFields()
+                        displayAlertOnMainThread("Login Failed", message: errorString, onViewController: self)
                         err("Error logging in: \(errorString)")
                     }
                 }
