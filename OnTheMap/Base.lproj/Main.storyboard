@@ -342,7 +342,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XLd-Jf-TAj" userLabel="UrlEntry">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
                                         <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter a link to share here " textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xKN-rR-Hrw">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter a link to share here " textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xKN-rR-Hrw">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="162"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -352,10 +352,15 @@
                                                     <outlet property="delegate" destination="j4n-U7-XZd" id="ey1-rF-4Ov"/>
                                                 </connections>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CRN-VU-Mxp">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CRN-VU-Mxp">
                                                 <rect key="frame" x="8" y="162" width="584" height="30"/>
                                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                <state key="normal" title="Test URL"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="42k-oy-9Sz"/>
+                                                </constraints>
+                                                <state key="normal" title="Test URL">
+                                                    <color key="titleColor" red="0.0" green="0.25098040699958801" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="browseURL:" destination="j4n-U7-XZd" eventType="touchUpInside" id="s35-De-5JD"/>
                                                 </connections>
@@ -363,13 +368,13 @@
                                         </subviews>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="CRN-VU-Mxp" secondAttribute="trailing" constant="8" id="1xW-qt-dJD"/>
-                                            <constraint firstItem="CRN-VU-Mxp" firstAttribute="leading" secondItem="XLd-Jf-TAj" secondAttribute="leading" constant="8" id="8jJ-1B-uKG"/>
-                                            <constraint firstAttribute="trailing" secondItem="xKN-rR-Hrw" secondAttribute="trailing" id="IjJ-e6-1i3"/>
-                                            <constraint firstItem="xKN-rR-Hrw" firstAttribute="leading" secondItem="XLd-Jf-TAj" secondAttribute="leading" id="ShH-wg-Bms"/>
-                                            <constraint firstAttribute="bottom" secondItem="CRN-VU-Mxp" secondAttribute="bottom" constant="8" id="dAF-JH-5Rr"/>
-                                            <constraint firstItem="xKN-rR-Hrw" firstAttribute="top" secondItem="XLd-Jf-TAj" secondAttribute="top" id="gR4-nZ-mGA"/>
-                                            <constraint firstItem="CRN-VU-Mxp" firstAttribute="top" secondItem="xKN-rR-Hrw" secondAttribute="bottom" id="jgY-Cr-4zc"/>
+                                            <constraint firstItem="xKN-rR-Hrw" firstAttribute="leading" secondItem="XLd-Jf-TAj" secondAttribute="leading" id="2zE-w5-XTt"/>
+                                            <constraint firstAttribute="trailing" secondItem="xKN-rR-Hrw" secondAttribute="trailing" id="581-2B-diK"/>
+                                            <constraint firstItem="CRN-VU-Mxp" firstAttribute="leading" secondItem="XLd-Jf-TAj" secondAttribute="leading" constant="8" id="7Se-vS-kj4"/>
+                                            <constraint firstItem="xKN-rR-Hrw" firstAttribute="top" secondItem="XLd-Jf-TAj" secondAttribute="top" id="8iT-Mf-5qy"/>
+                                            <constraint firstItem="CRN-VU-Mxp" firstAttribute="top" secondItem="xKN-rR-Hrw" secondAttribute="bottom" id="Wia-Xd-7Tn"/>
+                                            <constraint firstAttribute="trailing" secondItem="CRN-VU-Mxp" secondAttribute="trailing" constant="8" id="dC9-zP-Xem"/>
+                                            <constraint firstAttribute="bottom" secondItem="CRN-VU-Mxp" secondAttribute="bottom" constant="8" id="fbA-Kn-Zrj"/>
                                         </constraints>
                                     </view>
                                 </subviews>
