@@ -12,6 +12,10 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    
+    var activityView: UIActivityIndicatorView?
+//    var activityBlur: UIVisualEffectView?
+
    
     
     override func viewDidLoad() {
@@ -35,8 +39,26 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         self.view.endEditing(false)
         if let userName = emailTextField.text where userName != "" {
             if let password = passwordTextField.text where password != "" {
+
+//                let effect:UIBlurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+//                activityBlur = UIVisualEffectView(effect: effect)
+//                activityBlur!.frame = self.view.bounds;
+//                self.view.addSubview(activityBlur!)
+
+                activityView  = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+                activityView?.center = self.view.center
+                activityView?.color = UIColor.whiteColor()
+                activityView?.startAnimating()
+                self.view.addSubview(activityView!)
+
                 UdClient.sharedInstance().authenticateWithUsername(userName, password: password) {
                     (success, errorString) in
+                    dispatch_async(dispatch_get_main_queue(),{
+                        self.activityView?.stopAnimating()
+//                        self.activityBlur?.removeFromSuperview()
+                        self.activityView?.removeFromSuperview()
+                    })
+                    
                     if success {
                         self.completeLogin()
                     } else {

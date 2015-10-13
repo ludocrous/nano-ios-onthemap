@@ -83,6 +83,18 @@ class StudentLocationController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func browseURL(sender: UIButton) {
+        if let url = linkTextField.text where url != linkTextPrompt && url != "" {
+            // Check url is reasonably formed
+            if ((url as NSString).substringToIndex(7)).lowercaseString == "http://" || ((url as NSString).substringToIndex(8)).lowercaseString == "https://"{
+                UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+            }
+            else {
+                displayAlert("Invalid URL link", message: "Link must start \"http://\" or \"https://\"", onViewController: self)
+            }
+        } else {
+            displayAlert("You must enter a URL link", message: nil, onViewController: self)
+        }
+        
     }
     
     func forwardGeocodeAddress( addressString: String) {

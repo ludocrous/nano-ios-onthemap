@@ -130,28 +130,28 @@ extension UdClient {
     }
 
     // Use delete method to "delete" the session and force Udacity to delete the session ID server side
-/*    func deleteSessionID(completionHandler: (success: Bool, errorString: String?) -> Void) {
-        taskForDELETEMethod()  { (result, error) -> Void in
+   func deleteSessionID( completionHandler: (success: Bool, errorString: String?) -> Void) {
+        let method = Methods.DeleteSession
+        taskForDELETEMethod(method) { (result, error) in
             if let error = error {
+                err("Error in getUserData:\(error.localizedDescription)")
                 completionHandler(success: false, errorString: error.localizedDescription)
             } else {
-                if let sessionDict = (result as? [String:AnyObject]) where sessionDict.indexForKey("session") != nil {
-                    if let sessionID = (sessionDict[JSONResponseKeys.Session] as! [String:AnyObject])["id"] {
-                        dbg("Deleted Session Key: \(sessionID)")
-                        completionHandler(success: true, errorString: nil)
-                    } else {
-                        err("Session dict contains no key id")
-                        completionHandler(success: false, errorString: "Session dict contains no key id")
+                if let resultDict = (result as? [String:AnyObject]) where resultDict.indexForKey(JSONResponseKeys.Session) != nil {
+                    if let sessionDict  = resultDict[JSONResponseKeys.Session] as? [String: AnyObject] {
+                        if let sessionID = sessionDict[JSONResponseKeys.SessionID] as? String {
+                            dbg("Successful logout with Session ID: \(sessionID)")
+                            completionHandler(success: true,  errorString: nil)
+                            return
+                        }
                     }
-                } else {
-                    completionHandler(success: false, errorString: "No user details returned")
                 }
+                err("Udacity Session deletion (logout) failed")
+                completionHandler(success: false, errorString: "Unable to delete session ID")
             }
         }
-        
     }
-  */
-    
+
     //MARK: Udacity Website sign up
     func loadUdacitySignUpPage () {
         UIApplication.sharedApplication().openURL(NSURL(string: "https://www.udacity.com/account/auth#!/signup")!)

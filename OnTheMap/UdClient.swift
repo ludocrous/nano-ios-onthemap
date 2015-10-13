@@ -127,14 +127,10 @@ class UdClient : NSObject {
         return task
     }
     
-   /* func taskForDELETEMethod( completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    //DELETE Method
+    func taskForDELETEMethod(method: String, completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
-        /* 1. Set the parameters */
-        //        var mutableParameters = parameters
-        //        mutableParameters[ParameterKeys.ApiKey] = Constants.ApiKey
-        
-        /* 2/3. Build the URL and configure the request */
-        let urlString = Constants.BaseURLSecure + Methods.DeleteSession //+ TMDBClient.escapedParameters(mutableParameters)
+        let urlString = Constants.BaseURLSecure + method
         let url = NSURL(string: urlString)!
         let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "DELETE"
@@ -150,49 +146,51 @@ class UdClient : NSObject {
         if let xsrfCookie = xsrfCookie {
             request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
         }
-        
-        /* 4. Make the request */
+
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                print("There was an error with your request: \(error)")
+                err("There was an error with your request: \(error)")
+                completionHandler(result: nil, error: error)
                 return
             }
             
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
                 if let response = response as? NSHTTPURLResponse {
-                    print("Your request returned an invalid response! Status code: \(response.statusCode)!")
+                    err("Your request returned an invalid response! Status code: \(response.statusCode)!")
+                    if response.statusCode == 403 {
+                        completionHandler(result: nil, error:  NSError(domain: "UdError", code: UdError.Unauthorised.rawValue, userInfo: nil))
+                    } else {
+                        completionHandler(result: nil, error:  NSError(domain: "UdError", code: UdError.Unknown.rawValue, userInfo: nil))
+                    }
                 } else if let response = response {
-                    print("Your request returned an invalid response! Response: \(response)!")
+                    err("Your request returned an invalid response! Response: \(response)!")
+                    completionHandler(result: nil, error:  NSError(domain: "UdError", code: UdError.Unknown.rawValue, userInfo: nil))
                 } else {
-                    print("Your request returned an invalid response!")
+                    err("Your request returned an invalid response!")
+                    completionHandler(result: nil, error:  NSError(domain: "UdError", code: UdError.Unknown.rawValue, userInfo: nil))
                 }
                 return
             }
             
             /* GUARD: Was there any data returned? */
             guard let data = data else {
-                print("No data was returned by the request!")
+                err("No data was returned by the request!")
                 return
             }
             
             let cleanData = UdClient.stripUdacitySecurityFromData(data)
             
-            /* 5/6. Parse the data and use the data (happens in completion handler) */
             UdClient.parseJSONWithCompletionHandler(cleanData, completionHandler: completionHandler)
         }
         
-        /* 7. Start the request */
         task.resume()
         
         return task
-    } 
-*/
-
+    }
     
-
     class func subtituteKeyInMethod(method: String, key: String, value: String) -> String? {
         if method.rangeOfString("{\(key)}") != nil {
             return method.stringByReplacingOccurrencesOfString("{\(key)}", withString: value)

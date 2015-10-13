@@ -20,6 +20,19 @@ class TabBarController: UITabBarController {
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func logoutButtonTouch(sender: UIBarButtonItem) {
+        UdClient.sharedInstance().deleteSessionID() {
+            (success, errorString) in
+            if !success {
+                displayAlertOnMainThread("Logout not successfully completed",message: "Udacity session may still be active", onViewController: self)
+            }
+            // Return to Login screen regardless
+            dispatch_async(dispatch_get_main_queue(),{
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
+        }
+
+    }
     
     func refreshViews() {
         switch self.selectedIndex {
