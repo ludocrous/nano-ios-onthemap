@@ -99,6 +99,7 @@ class StudentLocationController: UIViewController, UITextFieldDelegate {
     
     func forwardGeocodeAddress( addressString: String) {
         // Bring on a activity view to show we are busy
+        self.view.alpha = 0.25
         activityView  = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
         activityView?.center = self.view.center
         activityView?.color = UIColor.whiteColor()
@@ -110,6 +111,7 @@ class StudentLocationController: UIViewController, UITextFieldDelegate {
         geocoder.geocodeAddressString(addressString, completionHandler: {(placemarks, error) -> Void in
             // Regardless of result - force the dismisal of the activity view
             dispatch_async(dispatch_get_main_queue(),{
+                self.view.alpha = 1
                 self.activityView?.stopAnimating()
                 self.activityView?.removeFromSuperview()
             })
