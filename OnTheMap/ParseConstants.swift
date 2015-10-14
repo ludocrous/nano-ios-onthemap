@@ -24,14 +24,19 @@ extension ParseClient {
     struct Methods {
         static let GetStudentLocations = "classes/StudentLocation"
         static let PostStudentLocation = "classes/StudentLocation"
+        static let GetUserStudentLocation = "classes/StudentLocation"
+        static let PutUserStudentLocation = "classes/StudentLocation/{objectId}"
     }
     
     struct URLKeys {
-        static let UserID = "objectid"
+        static let ObjectId = "objectId"
+        static let UniqueKey = "uniqueKey"
     }
     
     struct ParameterKeys {
         static let SortOrder = "order"
+        static let WhereQuery = "where"
+        
     }
     
     struct JSONBodyKeys {

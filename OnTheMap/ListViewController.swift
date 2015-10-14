@@ -30,16 +30,36 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell")
+        let cell = tableView.dequeueReusableCellWithIdentifier("studentCell") as? LocationViewCell
         
-        cell?.textLabel?.text = StudentLocationCollection.sharedInstance().collection[indexPath.row].fullName
-        if let url = StudentLocationCollection.sharedInstance().collection[indexPath.row].mediaURL {
-            cell?.detailTextLabel?.text = url
+        let studentLoc = StudentLocationCollection.sharedInstance().collection[indexPath.row]
+            cell?.studentNameLabel.text = studentLoc.fullName
+//        cell?.textLabel?.text = StudentLocationCollection.sharedInstance().collection[indexPath.row].fullName
+        if let url = studentLoc.mediaURL {
+            cell?.mediaURL.text = url
         } else {
-            cell?.detailTextLabel?.text = ""
+            cell?.mediaURL.text = ""
         }
+        
+        cell?.daysUpdated.textColor = UIColor.blackColor()
+        if let daysSinceUpdate = studentLoc.daysSinceLastUpdated() {
+            switch daysSinceUpdate {
+            case 0:
+                cell?.daysUpdated.text = "Updated today"
+                cell?.daysUpdated.textColor = UIColor.redColor()
+            case 1:
+                cell?.daysUpdated.text = "Updated yesterday"
+            default:
+                cell?.daysUpdated.text = "Updated \(daysSinceUpdate) days ago"
+            }
+
+        } else {
+            cell?.daysUpdated.text = ""
+        }
+
         return cell!
     }
+    
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let mediaurl = StudentLocationCollection.sharedInstance().collection[indexPath.row].mediaURL {

@@ -12,12 +12,16 @@ class TabBarController: UITabBarController {
 
     var activityView: UIActivityIndicatorView?
     var activityBlur: UIVisualEffectView?
+    var segueApproved = false
+    var userOverwriteRequested = false
 
     @IBOutlet weak var refreshButton: UIBarButtonItem!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        dbg("Setting segue to false")
+        segueApproved = false
     }
     
     @IBAction func logoutButtonTouch(sender: UIBarButtonItem) {
@@ -45,7 +49,47 @@ class TabBarController: UITabBarController {
         }
       
     }
+    
+    func requestUserOverwrite() {
+        let myAlert = UIAlertController(title: "You have an existing location", message: "Overwrite ?", preferredStyle: UIAlertControllerStyle.Alert)
+        myAlert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default) {(alertAction: UIAlertAction!) -> Void in
+            self.userOverwriteRequested = true
+            self.segueApproved = true
+            self.continueSegue()})
+        myAlert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) {(alertAction: UIAlertAction!) -> Void in
+            self.userOverwriteRequested = false
+            self.segueApproved = false
+            })
+        self.presentViewController(myAlert,animated: true, completion: nil)
+    }
+    
+    func hasUserEnteredLocation() {
+        ParseClient.sharedInstance().getUserStudentLocations() { (success, errorString) in
+            if success {
+                dispatch_async(dispatch_get_main_queue(),{
+                    dbg("Asking for overwrite")
+                    self.requestUserOverwrite()
+                })
+            } else {
+               self.segueApproved = true
+                dispatch_async(dispatch_get_main_queue(),{
+                    dbg("Approving segue")
+                    self.continueSegue()
+                })
+            }
+        }
+    
+    }
+    func continueSegue() {
+        if segueApproved {
+            performSegueWithIdentifier("EnterLocation", sender: self)
+            segueApproved = false
+            userOverwriteRequested = false
+        }
+    }
+    
 
+    
     @IBAction func refreshDataTouch(sender: AnyObject) {
         refreshButton.enabled = false
         
@@ -81,14 +125,29 @@ class TabBarController: UITabBarController {
 
     }
    
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        if segueApproved {
+            dbg("Performing Segue for: \(identifier)")
+            return true
+        } else {
+            dbg("Deferring Segue for: \(identifier)")
+            //Need to search for existing entry for logged in student
+            hasUserEnteredLocation()
+            return false
+        }
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        dbg("Calling Prepare for segue")
+        (segue.destinationViewController as! StudentLocationController).studentHasExistingEntry = userOverwriteRequested
+        
+        
+        
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    */
 
 }

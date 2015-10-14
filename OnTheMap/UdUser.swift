@@ -35,6 +35,7 @@ class UdUser {
             studentLocation.uniqueKey = self.key
         }
     }
+    var parseObjectId: String?
     
     init () {
         studentLocation = StudentLocation()

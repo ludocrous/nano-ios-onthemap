@@ -11,6 +11,9 @@ import MapKit
 
 class StudentLocationController: UIViewController, UITextFieldDelegate {
     // This enum denotes the two states under which this view can operate
+    
+    var studentHasExistingEntry: Bool = false
+
     enum SLLayoutState {
         case GeoEntry
         case UrlEntry
@@ -153,6 +156,39 @@ class StudentLocationController: UIViewController, UITextFieldDelegate {
         }
         
     }
+    
+    func postNewEntry() {
+        ParseClient.sharedInstance().postStudentLocation() {(success, errorString) in
+            if success {
+                //Reload the data from Parse
+                ParseClient.sharedInstance().loadStudentLocations() { (success, errorString ) in
+                    //Irrespective of success - return to tab view
+                    dispatch_async(dispatch_get_main_queue(),{
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    })
+                }
+            } else {
+                displayAlertOnMainThread("Unable to commit location", message: nil, onViewController: self)
+            }
+        }
+    }
+    
+    func putUpdatedEntry() {
+        ParseClient.sharedInstance().putStudentLocation() {(success, errorString) in
+            if success {
+                //Reload the data from Parse
+                ParseClient.sharedInstance().loadStudentLocations() { (success, errorString ) in
+                    //Irrespective of success - return to tab view
+                    dispatch_async(dispatch_get_main_queue(),{
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    })
+                }
+            } else {
+                displayAlertOnMainThread("Unable to commit location", message: nil, onViewController: self)
+            }
+        }
+
+    }
 
     @IBAction func submitButtonTouch(sender: AnyObject) {
         // Commit the position and url to the database
@@ -161,18 +197,10 @@ class StudentLocationController: UIViewController, UITextFieldDelegate {
             if ((url as NSString).substringToIndex(7)).lowercaseString == "http://" || ((url as NSString).substringToIndex(8)).lowercaseString == "https://"{
                 UdUser.sharedInstance().studentLocation.mediaURL = url
                 // if so call POST
-                ParseClient.sharedInstance().postStudentLocation() {(success, errorString) in
-                    if success {
-                        //Reload the data from Parse
-                        ParseClient.sharedInstance().loadStudentLocations() { (success, errorString ) in
-                            //Irrespective of success - return to tab view
-                            dispatch_async(dispatch_get_main_queue(),{
-                                self.dismissViewControllerAnimated(true, completion: nil)
-                            })
-                        }
-                    } else {
-                        displayAlertOnMainThread("Unable to commit location", message: nil, onViewController: self)
-                    }
+                if studentHasExistingEntry {
+                    putUpdatedEntry()
+                } else {
+                    postNewEntry()
                 }
             }
             else {

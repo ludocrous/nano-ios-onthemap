@@ -49,6 +49,7 @@ struct StudentLocation {
         if objectID == nil || uniqueKey == nil || latitude == nil || longitude == nil || firstName == nil {
             return nil
         }
+    
     }
     
 // Convert location into a Map Annotation with coordinate point only
@@ -69,6 +70,22 @@ struct StudentLocation {
         return annotation
     }
     
+    func daysSinceLastUpdated() -> Int? {
+        if var dateString = updatedAt {
+            dateString = dateString.stringByReplacingOccurrencesOfString("T", withString: " ")
+            dateString = dateString.stringByReplacingOccurrencesOfString("Z", withString: "")
+            let formatter = NSDateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+            if let record = formatter.dateFromString(dateString) {
+                return daysBetweenDates(record, endDate: NSDate())
+            } else {
+                return nil
+            }
+        }
+        return nil
+    }
+    
+
 }
 
 
@@ -95,7 +112,7 @@ class StudentLocationCollection {
                 collection.append(newStudLoc)
             }
         }
-        collection.sortInPlace {$0.createdAt > $1.createdAt}
+        collection.sortInPlace {$0.updatedAt > $1.updatedAt}
         for loc in collection{
             annotations.append(loc.asMapAnnotation())
         }
